@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Certicar — Centre d'inspection automobile n°1 en Ile-de-France</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  @font-face { font-family: 'HafferSQ'; src: url('../006-certicar-inspection-backup/assets/fonts/HafferSQ-Regular.otf') format('opentype'); font-weight: 400; }
+  @font-face { font-family: 'HafferSQ'; src: url('../006-certicar-inspection-backup/assets/fonts/HafferSQ-Medium.otf') format('opentype'); font-weight: 500; }
+  @font-face { font-family: 'HafferSQ'; src: url('../006-certicar-inspection-backup/assets/fonts/HafferSQ-SemiBold.otf') format('opentype'); font-weight: 600; }
+  @font-face { font-family: 'HafferSQ'; src: url('../006-certicar-inspection-backup/assets/fonts/HafferSQ-Bold.otf') format('opentype'); font-weight: 700; }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --purple: #5955ef;
+    --purple-dark: #4441ba;
+    --purple-deeper: #3D35A8;
+    --purple-light: #EDE9FE;
+    --purple-glow: rgba(89, 85, 239, 0.15);
+    --text: #1a1a2e;
+    --text-50: rgba(26, 26, 46, 0.5);
+    --text-30: rgba(26, 26, 46, 0.3);
+    --grey-bg: #f5f5f7;
+    --grey-border: #e8e8ec;
+    --grey-border-light: #ededf0;
+    --lime: #C8FF00;
+    --radius-sm: 12px;
+    --radius-md: 18px;
+    --radius-lg: 22px;
+    --radius-pill: 9999px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'HafferSQ', 'Onest', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: #fff;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== ANNOUNCEMENT BAR ===== */
+  .announce-bar {
+    width: 100%;
+    background: var(--text);
+    color: #fff;
+    text-align: center;
+    padding: 10px 24px;
+    font-size: 13px; font-weight: 500;
+    font-family: 'Onest', sans-serif;
+    letter-spacing: 0.01em;
+    position: relative; z-index: 101;
+  }
+  .announce-bar span {
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .announce-badge {
+    display: inline-block;
+    background: var(--purple);
+    color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .announce-bar a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .announce-bar a:hover { color: #fff; }
+  .announce-arrow {
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 0.3s;
+  }
+  .announce-bar a:hover .announce-arrow { transform: translateX(3px); }
+
+  /* ===== NAVBAR ===== */
+  .navbar {
+    position: sticky; top: 0; z-index: 100;
+    width: 100%;
+    padding: 0 clamp(24px, 4vw, 48px);
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: #fff;
+    border-bottom: 1px solid var(--grey-border);
+    transition: box-shadow 0.4s;
+  }
+  .navbar.scrolled {
+    box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+  }
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--text-50);
+    padding: 7px 14px; border-radius: var(--radius-pill); text-decoration: none;
+    transition: all 0.3s;
+  }
+  .nav-links a:hover { color: var(--text); background: rgba(0,0,0,0.04); }
+  .nav-logo { display: flex; align-items: center; }
+  .nav-logo img { height: 38px; width: auto; }
+  /* ===== CTA 3D BUTTON (reusable) ===== */
+  /* ===== CTA 3D BUTTON (reusable) ===== */
+  .cta-3d {
+    display: inline-flex; align-items: center;
+    text-decoration: none; cursor: pointer;
+    border-radius: 12px;
+    background: #4845c7;
+    padding: 2px;
+    box-shadow: 0 2px 8px rgba(89,85,239,0.12);
+    transition: all 0.2s ease;
+  }
+  .cta-3d:hover {
+    box-shadow: 0 4px 14px rgba(89,85,239,0.2);
+    transform: translateY(-1px);
+  }
+  .cta-3d-inner {
+    display: flex; align-items: center;
+    border-radius: 10px;
+    background: var(--purple);
+    border: 1px solid rgba(255,255,255,0.15);
+    position: relative; overflow: hidden;
+  }
+  .cta-3d-inner::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+    border-radius: 10px 10px 0 0;
+    pointer-events: none;
+  }
+  .cta-3d-text {
+    padding: 9px 18px;
+    font-size: 13.5px; font-weight: 600;
+    color: #fff; white-space: nowrap;
+    position: relative; z-index: 1;
+  }
+  .cta-3d-icon {
+    width: 32px; height: 32px;
+    margin: 3px; margin-left: 0;
+    background: #fff;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; position: relative; z-index: 1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1), inset 0 1px 2px rgba(0,0,0,0.12);
+  }
+  .cta-3d-circle {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #5955ef;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s;
+  }
+  .cta-3d:hover .cta-3d-circle { background: #4441ba; }
+  .cta-3d-circle svg {
+    width: 11px; height: 11px; color: #fff;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cta-3d:hover .cta-3d-circle svg { transform: translateX(2px); }
+
+  /* ===== HERO ===== */
+  .hero { width: 100%; padding: 22px 22px 0; }
+  .hero-container {
+    position: relative; width: 100%; min-height: calc(100vh - 72px - 40px);
+    display: flex; flex-direction: column; overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-dark) 100%);
+  }
+  .hero-video {
+    position: absolute; inset: 0; overflow: hidden;
+    opacity: 0.14; mix-blend-mode: multiply;
+  }
+  .hero-video iframe {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw; height: 100vh;
+    min-width: 177.78vh; min-height: 56.25vw;
+    pointer-events: none;
+  }
+  .hero-noise {
+    position: absolute; inset: 0; opacity: 0.03; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat; background-size: 128px;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+  .hero-content {
+    position: relative; z-index: 10; flex: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 24px; max-width: 900px; margin: 0 auto; width: 100%;
+    padding-bottom: 64px; margin-top: -24px;
+  }
+  .hero-spacer { flex-shrink: 0; height: 60px; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius-pill); padding: 6px 16px;
+    margin-bottom: clamp(1.5rem, 4vh, 3rem);
+  }
+  .hero-eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4ade80; animation: pulse 2s infinite;
+  }
+  .hero-eyebrow span {
+    color: rgba(255,255,255,0.9); font-size: 12px;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  .hero h1 {
+    color: #fff; font-weight: 600;
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    line-height: 1.05; letter-spacing: -0.03em;
+    margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+  }
+  .hero h1 .text-outline {
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.6);
+    color: transparent;
+  }
+  .hero h1 .text-accent {
+    color: #fff;
+  }
+
+  .hero-sub {
+    color: rgba(255,255,255,0.7); font-size: clamp(1rem, 1.6vw, 1.125rem);
+    line-height: 1.6; max-width: 580px;
+    margin-bottom: clamp(1.5rem, 3vh, 2rem);
+  }
+
+  /* Hero CTA */
+  .hero-cta-wrap { margin-bottom: clamp(1.5rem, 4vh, 3rem); }
+  /* Hero variant: white pill button on purple bg */
+  .cta-hero {
+    display: inline-flex; align-items: center;
+    text-decoration: none; cursor: pointer;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.15);
+    padding: 4px;
+    box-shadow:
+      0 1px 0 0 rgba(0,0,0,0.06),
+      0 4px 16px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+  }
+  .cta-hero:hover {
+    transform: translateY(1px);
+    box-shadow:
+      0 0 0 0 rgba(0,0,0,0.04),
+      0 2px 8px rgba(0,0,0,0.06);
+    background: rgba(255,255,255,0.2);
+  }
+  .cta-hero-inner {
+    display: flex; align-items: center;
+    border-radius: 9999px;
+    background: #fff;
+    border: 1px solid rgba(255,255,255,0.9);
+    position: relative; overflow: hidden;
+    box-shadow: inset 0 -1px 2px rgba(0,0,0,0.04);
+  }
+  .cta-hero-text {
+    padding: 14px 28px;
+    font-size: 15px; font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    position: relative; z-index: 1;
+    letter-spacing: -0.01em;
+  }
+  .cta-hero-icon {
+    width: 44px; height: 44px;
+    margin: 4px; margin-left: 0;
+    background: var(--purple);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; position: relative; z-index: 1;
+    box-shadow: 0 2px 6px rgba(89,85,239,0.3);
+    transition: background 0.3s;
+  }
+  .cta-hero:hover .cta-hero-icon { background: var(--purple-dark); }
+  .cta-hero-icon svg {
+    width: 16px; height: 16px; color: #fff;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cta-hero:hover .cta-hero-icon svg { transform: translateX(2px); }
+
+  /* Floating stamp */
+  .hero-stamp {
+    position: absolute; top: 140px; right: clamp(30px, 5vw, 80px);
+    width: 110px; height: 110px;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 2px;
+    transform: rotate(12deg);
+    animation: stampFloat 5s ease-in-out infinite;
+    z-index: 20;
+    backdrop-filter: blur(8px); background: rgba(255,255,255,0.06);
+  }
+  @keyframes stampFloat {
+    0%, 100% { transform: rotate(12deg) translateY(0); }
+    50% { transform: rotate(12deg) translateY(-8px); }
+  }
+  .hero-stamp .stamp-text {
+    font-family: 'Onest', sans-serif;
+    font-size: 9px; font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase; letter-spacing: 0.15em;
+  }
+  .hero-stamp .stamp-val {
+    font-family: 'HafferSQ', sans-serif;
+    font-size: 2rem; font-weight: 700; color: #fff;
+    line-height: 1;
+  }
+
+  /* ===== HERO BADGE ===== */
+  .hero-badge {
+    position: relative; z-index: 10;
+    margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+  }
+  .hero-badge img {
+    height: clamp(56px, 8vw, 80px); width: auto;
+    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.15));
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .hero-badge:hover img { transform: scale(1.08) rotate(-2deg); }
+
+  /* ===== TICKER ===== */
+  .ticker-wrap {
+    position: relative;
+    overflow: visible;
+    z-index: 10;
+    margin: 0;
+    margin: 16px 0;
+    padding: 0;
+    pointer-events: none;
+  }
+  .ticker {
+    background: var(--purple);
+    padding: 18px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: rotate(0deg) scale(1);
+    box-shadow: 0 2px 12px rgba(89, 85, 239, 0.25);
+    pointer-events: auto;
+  }
+  .ticker-inner {
+    display: flex; gap: 0;
+    animation: ticker 28s linear infinite;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    font-family: 'HafferSQ', sans-serif;
+    font-size: clamp(14px, 1.4vw, 17px); font-weight: 700;
+    color: #fff; text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0 32px;
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .ticker-item .sep {
+    width: 6px; height: 6px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ===== SECTION COMMONS ===== */
+  .section-label {
+    font-family: 'Onest', sans-serif;
+    font-size: 1.0625rem; font-weight: 800;
+    color: var(--purple);
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: 'Onest', sans-serif;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600; line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+  .section-header {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 6px;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+  .section-header.left {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .section-sub {
+    font-family: 'Onest', sans-serif;
+    font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+    color: var(--text-50); line-height: 1.6;
+    max-width: 520px; margin-top: 8px;
+  }
+  .section-title.wide {
+    max-width: 680px;
+  }
+
+  /* ===== LOGOS ===== */
+  .logos-section { padding: 60px 16px; }
+  .logos-inner {
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    max-width: 76rem; margin: 0 auto;
+  }
+  .logos-inner p {
+    font-family: 'Onest', sans-serif; color: var(--text-50); font-weight: 500; text-align: center;
+  }
+  .logos-inner img { width: 100%; max-width: 760px; filter: grayscale(1); opacity: 0.6; }
+
+  /* ===== INSPECTION BENTO ===== */
+  .inspect-section { padding: clamp(64px, 8vw, 96px) clamp(24px, 4vw, 96px); }
+  .inspect-inner { max-width: 76rem; margin: 0 auto; }
+  .inspect-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .inspect-video {
+    background: linear-gradient(160deg, var(--purple-dark) 0%, var(--purple) 100%);
+    border-radius: var(--radius-lg);
+    min-height: 100%; overflow: hidden;
+    position: relative;
+  }
+  .inspect-video::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .inspect-video video {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block; border-radius: var(--radius-lg);
+  }
+  .inspect-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .inspect-card {
+    background: var(--grey-bg);
+    border: 1px solid var(--grey-border-light);
+    border-radius: 16px;
+    padding: 24px 22px;
+    display: flex; flex-direction: column;
+    gap: 12px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .inspect-card::after {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--purple);
+    border-radius: 0 3px 3px 0;
+    transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .inspect-card:hover::after { height: 100%; }
+  .inspect-card:hover {
+    background: #fff;
+    border-color: var(--grey-border);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+  .inspect-card-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: #fff;
+    border: 1px solid var(--grey-border-light);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-30);
+    transition: all 0.35s;
+  }
+  .inspect-card-icon svg { width: 18px; height: 18px; }
+  .inspect-card:hover .inspect-card-icon {
+    background: var(--purple-light);
+    border-color: rgba(89,85,239,0.15);
+    color: var(--purple);
+  }
+  .inspect-card-num {
+    font-family: 'Onest', sans-serif;
+    font-size: 9px; font-weight: 800;
+    color: var(--text-30); letter-spacing: 0.1em;
+  }
+  .inspect-card-title {
+    font-size: 0.95rem; font-weight: 600;
+    letter-spacing: -0.01em; line-height: 1.2;
+  }
+  .inspect-card-desc {
+    font-size: 0.78rem; color: var(--text-50);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 900px) {
+    .inspect-layout { grid-template-columns: 1fr; }
+    .inspect-video { min-height: 400px; }
+    .inspect-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .inspect-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== LOCATION SECTION ===== */
+  .location-section { padding: 16px; }
+  .location-card {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 100%);
+    border-radius: var(--radius-lg);
+    color: #fff;
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 340px; overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 76rem; margin: 0 auto;
+  }
+  .location-card:hover {
+    box-shadow: 0 12px 48px rgba(89, 85, 239, 0.3);
+  }
+  .loc-content {
+    padding: clamp(36px, 5vw, 56px);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .loc-content .loc-eyebrow {
+    font-family: 'Onest', sans-serif;
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.14em; font-weight: 800;
+    color: rgba(255,255,255,0.5); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .loc-content .loc-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4ade80; animation: pulse 2s infinite;
+  }
+  .loc-content h3 {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .loc-content .loc-desc {
+    font-size: 15px; color: rgba(255,255,255,0.65);
+    line-height: 1.6; margin-bottom: 28px; max-width: 400px;
+  }
+  .loc-details { display: flex; flex-direction: column; gap: 12px; }
+  .loc-detail {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 500;
+  }
+  .loc-detail-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: #fff;
+  }
+  .loc-detail-icon svg { width: 16px; height: 16px; }
+  .loc-map-side {
+    position: relative; overflow: hidden;
+  }
+  .loc-map-side iframe {
+    width: 100%; height: 100%; min-height: 340px; border: 0;
+    filter: saturate(0.2) brightness(0.9) contrast(1.1);
+    transition: filter 0.5s;
+  }
+  .location-card:hover .loc-map-side iframe {
+    filter: saturate(0.5) brightness(0.95);
+  }
+  .loc-map-side::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, var(--purple) 0%, transparent 30%);
+    pointer-events: none;
+  }
+
+  /* ===== STEPS ===== */
+  .steps-section { padding: clamp(64px, 8vw, 96px) clamp(24px, 4vw, 96px); }
+  .steps-inner { max-width: 76rem; margin: 0 auto; }
+  .steps-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2vw, 24px);
+  }
+  .step-card {
+    position: relative; border-radius: var(--radius-lg);
+    height: clamp(360px, 40vw, 500px);
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+  .step-card img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; transition: transform 0.6s;
+  }
+  .step-card:hover img { transform: scale(1.03); }
+  .step-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(transparent 25%, rgba(0,0,0,0.7) 75%);
+  }
+  .step-num {
+    position: absolute; top: 20px; left: 20px;
+    font-size: 5rem; font-weight: 700; line-height: 1;
+    color: rgba(255,255,255,0.12);
+    letter-spacing: -0.04em;
+  }
+  .step-content {
+    position: relative; z-index: 10;
+    display: flex; align-items: flex-end;
+    height: 100%; padding: 24px;
+  }
+  .step-row { display: flex; align-items: flex-end; gap: 16px; }
+  .step-num-badge {
+    flex-shrink: 0; width: 48px; height: 48px;
+    border-radius: 50%; border: 2px solid rgba(255,255,255,0.3);
+    background: linear-gradient(to bottom, var(--purple-dark), var(--purple));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem; font-weight: 700; color: #fff;
+    box-shadow: 0 4px 16px rgba(89, 85, 239, 0.3);
+  }
+  .step-text h3 {
+    color: #fff; font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-weight: 600; line-height: 1.3;
+  }
+  .step-text p {
+    color: rgba(255,255,255,0.7); font-size: clamp(0.8125rem, 1.2vw, 0.9rem);
+    line-height: 1.4; margin-top: 4px;
+  }
+
+  /* ===== RAPPORT ===== */
+  .rapport-section { padding: 16px; }
+  .rapport-container {
+    background: var(--grey-bg);
+    border: 1px solid var(--grey-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(48px, 8vw, 80px) clamp(24px, 4vw, 64px);
+    position: relative; overflow: hidden;
+  }
+  .rapport-inner { max-width: 76rem; margin: 0 auto; position: relative; z-index: 2; }
+
+  .rapport-content {
+    display: flex; gap: 32px; align-items: stretch;
+  }
+  .rapport-tabs { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .rapport-tab {
+    background: #fafafa;
+    border: 1px solid var(--grey-border-light);
+    border-radius: var(--radius-md);
+    padding: 24px 28px;
+    display: flex; gap: 18px; cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .rapport-tab:hover {
+    border-color: rgba(89, 85, 239, 0.15);
+    background: #fff;
+  }
+  .rapport-tab.active {
+    background: #fff;
+    border-color: var(--purple);
+    box-shadow: 0 4px 20px rgba(89, 85, 239, 0.1), 0 0 0 1px var(--purple);
+  }
+  .rapport-tab .tab-indicator {
+    width: 5px; border-radius: 99px; background: #e5e5ea;
+    flex-shrink: 0; align-self: stretch;
+    position: relative; overflow: hidden;
+  }
+  .rapport-tab .tab-fill {
+    position: absolute; top: 0; left: 0; width: 100%;
+    height: 0%;
+    background: linear-gradient(to bottom, var(--purple-dark), var(--purple));
+    border-radius: 99px;
+    transition: none;
+    box-shadow: 0 0 8px rgba(89, 85, 239, 0.4);
+  }
+  .rapport-tab.active .tab-fill {
+    height: 100%;
+    transition: height var(--tab-duration, 5s) linear;
+  }
+  .rapport-tab.done .tab-indicator { background: var(--purple); opacity: 0.3; }
+  .rapport-tab.done .tab-fill { height: 100%; transition: none; }
+  .rapport-tab h3 {
+    font-size: 1.125rem; font-weight: 600; color: var(--text);
+    transition: color 0.3s;
+  }
+  .rapport-tab.active h3 { color: var(--purple); }
+  .rapport-tab p {
+    font-size: 0.875rem; color: var(--text-50);
+    line-height: 1.5; margin-top: 4px;
+  }
+
+  /* Visual panel */
+  .rapport-visual {
+    flex: 1; position: relative;
+    border-radius: var(--radius-lg); overflow: hidden;
+    background: linear-gradient(153deg, var(--purple-dark), var(--purple));
+    box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 5px 10px rgba(0,0,0,0.1), 0 10px 30px rgba(0,0,0,0.08);
+    min-height: 480px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 32px;
+  }
+  .rapport-visual-grid {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.08;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Tab panels */
+  .tab-panel {
+    width: 100%; display: none;
+    animation: fadeSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .tab-panel.active { display: flex; flex-direction: column; align-items: center; }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Score gauge */
+  .score-gauge { width: 200px; height: 200px; position: relative; margin-bottom: 24px; }
+  .score-gauge svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .gauge-bg { fill: none; stroke: rgba(255,255,255,0.15); stroke-width: 8; }
+  .gauge-fill {
+    fill: none; stroke: #4ade80; stroke-width: 8; stroke-linecap: round;
+    stroke-dasharray: 502; stroke-dashoffset: 502;
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .score-gauge.animated .gauge-fill { stroke-dashoffset: 100; }
+  .score-center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .score-center .letter {
+    font-size: 4rem; font-weight: 800; color: #fff; line-height: 1;
+    opacity: 0; transform: scale(0.5);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.8s;
+  }
+  .score-gauge.animated .letter { opacity: 1; transform: scale(1); }
+  .score-center .sublabel {
+    font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase;
+    letter-spacing: 0.1em; font-weight: 600;
+    opacity: 0; transition: opacity 0.4s 1.2s;
+  }
+  .score-gauge.animated .sublabel { opacity: 1; }
+
+  .score-grades { display: flex; gap: 8px; margin-top: 8px; }
+  .score-grade {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px; color: #fff;
+    opacity: 0.3; transition: all 0.3s;
+  }
+  .score-grade.active { opacity: 1; transform: scale(1.1); }
+  .sg-a { background: #22c55e; } .sg-b { background: #84cc16; }
+  .sg-c { background: #eab308; } .sg-d { background: #f97316; } .sg-e { background: #ef4444; }
+
+  .panel-title {
+    color: #fff; font-size: 1.125rem; font-weight: 600;
+    text-align: center; margin-bottom: 8px;
+  }
+  .panel-desc {
+    color: rgba(255,255,255,0.65); font-size: 0.875rem;
+    text-align: center; max-width: 280px; line-height: 1.5;
+  }
+
+  /* Checklist */
+  .check-list { width: 100%; max-width: 300px; }
+  .check-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    opacity: 0; transform: translateX(-16px);
+    transition: all 0.4s;
+  }
+  .check-item.visible { opacity: 1; transform: translateX(0); }
+  .check-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: rgba(74,222,128,0.15); color: #4ade80;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .check-icon svg { width: 14px; height: 14px; }
+  .check-item span { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 500; }
+
+  /* Bar chart */
+  .bar-chart { width: 100%; max-width: 300px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .bar-label {
+    font-family: 'Onest', sans-serif;
+    font-size: 12px; color: rgba(255,255,255,0.5);
+    font-weight: 600; width: 80px; flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1; height: 12px; border-radius: 6px;
+    background: rgba(255,255,255,0.06);
+  }
+  .bar-fill {
+    height: 100%; border-radius: 6px;
+    background: linear-gradient(90deg, var(--purple), #8B83FF);
+    width: 0%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .bar-val {
+    font-size: 13px; color: #fff; font-weight: 700;
+    width: 24px; text-align: right; flex-shrink: 0;
+  }
+
+  /* Photo grid */
+  .photo-grid-visual {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 8px; width: 100%; max-width: 280px;
+  }
+  .photo-cell {
+    aspect-ratio: 1; border-radius: var(--radius-sm);
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.3);
+    position: relative; overflow: hidden;
+    opacity: 0; transform: scale(0.85);
+    transition: all 0.3s;
+  }
+  .photo-cell.visible { opacity: 1; transform: scale(1); }
+  .photo-cell:hover { border-color: rgba(89,85,239,0.3); background: rgba(89,85,239,0.08); }
+  .photo-cell.highlight {
+    border-color: var(--purple);
+    background: rgba(89,85,239,0.12);
+  }
+  .photo-cell .big-num {
+    font-size: 1.5rem; font-weight: 700; color: var(--purple);
+    line-height: 1;
+  }
+  .photo-cell .cam { color: rgba(255,255,255,0.25); }
+
+  /* ===== LED SPOTLIGHT EFFECT ===== */
+  .led-glow {
+    position: relative;
+    width: 100%; height: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+  /* Cone de lumiere massif */
+  .led-glow::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%; max-width: 66rem; height: 350px;
+    background:
+      radial-gradient(ellipse 70% 65% at 50% 0%, rgba(89,85,239,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 85% 50% at 50% 0%, rgba(89,85,239,0.10) 0%, transparent 65%),
+      radial-gradient(ellipse 100% 40% at 50% 0%, rgba(89,85,239,0.04) 0%, transparent 80%);
+    pointer-events: none;
+    animation: ledSpotBreath 5s ease-in-out infinite;
+  }
+  /* Source LED — barre lumineuse en haut */
+  .led-glow::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60%; max-width: 50rem; height: 3px;
+    background: var(--purple);
+    border-radius: 0 0 100% 100%;
+    box-shadow:
+      0 0 20px 8px rgba(89,85,239,0.45),
+      0 0 50px 20px rgba(89,85,239,0.25),
+      0 0 100px 40px rgba(89,85,239,0.12),
+      0 2px 160px 60px rgba(89,85,239,0.06);
+    animation: ledBarBreath 5s ease-in-out infinite;
+  }
+  @keyframes ledSpotBreath {
+    0%, 100% { opacity: 0.85; }
+    50% { opacity: 1; }
+  }
+  @keyframes ledBarBreath {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  /* ===== PRICING ===== */
+  .pricing-section { padding: clamp(64px, 8vw, 96px) clamp(24px, 4vw, 96px); }
+  .pricing-inner { max-width: 76rem; margin: 0 auto; }
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .pricing-card {
+    background: #fff;
+    border: 1px solid var(--grey-border);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    display: flex; flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+  }
+  .pricing-card.featured {
+    background: linear-gradient(160deg, var(--purple-dark), var(--purple));
+    border-color: transparent; color: #fff;
+    box-shadow: 0 8px 40px rgba(89,85,239,0.25);
+    transform: scale(1.03);
+    z-index: 2;
+  }
+  .pricing-card.featured:hover {
+    transform: scale(1.03) translateY(-4px);
+    box-shadow: 0 16px 50px rgba(89,85,239,0.3);
+  }
+  .popular-badge {
+    position: absolute; top: 0; right: 24px;
+    background: linear-gradient(135deg, #C8FF00, #a8e600);
+    color: #1a1a2e;
+    font-family: 'Onest', sans-serif;
+    font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 6px 14px;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    box-shadow: 0 4px 12px rgba(200,255,0,0.3);
+  }
+  .pricing-card .card-label {
+    font-family: 'Onest', sans-serif;
+    font-size: 12px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--purple); margin-bottom: 8px;
+  }
+  .pricing-card.featured .card-label { color: rgba(255,255,255,0.6); }
+  .pricing-card .card-name {
+    font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;
+  }
+  .pricing-card .card-desc {
+    font-size: 0.9rem; color: var(--text-50); line-height: 1.5; margin-bottom: 24px;
+  }
+  .pricing-card.featured .card-desc { color: rgba(255,255,255,0.6); }
+  .pricing-card .card-price {
+    font-size: 2.75rem; font-weight: 700; line-height: 1; margin-bottom: 4px;
+  }
+  .pricing-card .card-price-sub {
+    font-size: 12px; color: var(--text-30);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    font-weight: 600; margin-bottom: 28px;
+  }
+  .pricing-card.featured .card-price-sub { color: rgba(255,255,255,0.4); }
+  .pricing-card .card-features {
+    list-style: none; margin-bottom: 32px; flex: 1;
+  }
+  .pricing-card .card-features li {
+    font-size: 0.9rem; padding: 10px 0;
+    border-bottom: 1px dashed var(--grey-border);
+    display: flex; align-items: center; gap: 12px;
+    color: var(--text);
+  }
+  .pricing-card.featured .card-features li {
+    border-color: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.85);
+  }
+  .pricing-card .card-features li .ck {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: rgba(89,85,239,0.08);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: var(--purple);
+  }
+  .pricing-card.featured .card-features li .ck {
+    background: rgba(255,255,255,0.12); color: #C8FF00;
+  }
+  .pricing-card .card-features li .ck svg { width: 12px; height: 12px; }
+  .pricing-btn {
+    display: block; text-align: center;
+    font-size: 15px; font-weight: 600;
+    padding: 16px; border-radius: var(--radius-pill);
+    text-decoration: none; transition: all 0.3s;
+  }
+  .pricing-btn-default {
+    background: var(--grey-bg); color: var(--text);
+    border: 1px solid var(--grey-border);
+  }
+  .pricing-btn-default:hover {
+    background: var(--purple); color: #fff;
+    border-color: var(--purple);
+  }
+  .pricing-btn-featured {
+    background: #fff; color: var(--purple-deeper);
+    font-weight: 700; border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .pricing-btn-featured:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+
+  /* ===== RISK / PLATFORMS SECTION ===== */
+  .risk-section { padding: 16px; }
+  .risk-container {
+    background: var(--grey-bg);
+    border: 1px solid var(--grey-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(48px, 8vw, 80px) clamp(24px, 4vw, 64px);
+    position: relative; overflow: hidden;
+  }
+  .risk-inner {
+    max-width: 76rem; margin: 0 auto; position: relative; z-index: 2;
+  }
+
+  /* Mechanic sticker */
+  .risk-mechanic {
+    position: absolute;
+    right: clamp(-60px, -3vw, -30px);
+    top: 5%;
+    transform: none;
+    width: clamp(200px, 22vw, 320px);
+    pointer-events: none;
+    z-index: 1;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.1));
+    animation: mechanicFloat 6s ease-in-out infinite;
+  }
+  .risk-mechanic img {
+    width: 100%; height: auto;
+    display: block;
+  }
+  @keyframes mechanicFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(0.5deg); }
+  }
+  @media (max-width: 900px) {
+    .risk-mechanic { display: none; }
+    .risk-mechanic-mobile {
+      display: block;
+      position: absolute;
+      right: 0px;
+      top: -90px;
+      width: 90px;
+      pointer-events: none;
+      z-index: 0;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+    }
+    .risk-mechanic-mobile img { width: 100%; height: auto; display: block; }
+    .risk-stats { position: relative; }
+    .risk-stat-card { position: relative; z-index: 1; }
+  }
+  @media (min-width: 901px) {
+    .risk-mechanic-mobile { display: none; }
+  }
+
+  /* Platform logos row */
+  .risk-logos {
+    display: flex; align-items: center; justify-content: center;
+    gap: clamp(16px, 3vw, 32px);
+    margin-bottom: clamp(40px, 6vw, 64px);
+    position: relative; z-index: 2;
+  }
+  .risk-logo-card {
+    width: clamp(72px, 8vw, 96px); height: clamp(72px, 8vw, 96px);
+    background: #fff;
+    border-radius: 20px;
+    border: 5px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.08);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+  }
+  .risk-logo-card:nth-child(2) { transform: rotate(-3deg); }
+  .risk-logo-card:nth-child(3) { transform: rotate(2.5deg) translateY(-6px); z-index: 2; }
+  .risk-logo-card:nth-child(4) { transform: rotate(-1.5deg) translateY(4px); }
+  .risk-logo-card:hover {
+    transform: rotate(0deg) scale(1.08) translateY(-6px) !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08), 0 20px 56px rgba(0,0,0,0.12);
+  }
+  .risk-logo-card img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(1);
+    transition: filter 0.4s;
+  }
+  .risk-logo-card:hover img { filter: grayscale(0); }
+
+  /* Decorative elements flanking logos */
+  .risk-deco {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; flex-shrink: 0;
+  }
+  .risk-deco-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--purple); opacity: 0.2;
+  }
+  .risk-deco-dot:nth-child(2) { opacity: 0.35; width: 6px; height: 6px; }
+  .risk-deco-dot:nth-child(3) { opacity: 0.12; width: 10px; height: 10px; }
+  .risk-deco-line {
+    width: 2px; height: 32px; border-radius: 2px;
+    background: linear-gradient(to bottom, var(--purple), transparent);
+    opacity: 0.15;
+  }
+  .risk-deco-cross {
+    width: 14px; height: 14px; position: relative; opacity: 0.15;
+  }
+  .risk-deco-cross::before, .risk-deco-cross::after {
+    content: ''; position: absolute;
+    background: var(--purple); border-radius: 1px;
+  }
+  .risk-deco-cross::before { width: 14px; height: 2px; top: 6px; left: 0; }
+  .risk-deco-cross::after { width: 2px; height: 14px; top: 0; left: 6px; }
+  .risk-deco-ring {
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 2px solid var(--purple); opacity: 0.12;
+  }
+  .risk-deco-diamond {
+    width: 10px; height: 10px;
+    background: var(--purple); opacity: 0.1;
+    transform: rotate(45deg); border-radius: 2px;
+  }
+
+  /* Big quote */
+  .risk-quote {
+    text-align: center;
+    max-width: 640px; margin: 0 auto clamp(16px, 3vw, 24px);
+    position: relative; z-index: 2;
+  }
+  .risk-quote blockquote {
+    font-family: 'Onest', sans-serif;
+    font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+    font-weight: 600; line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    font-style: normal;
+  }
+  .risk-quote blockquote .q-purple {
+    color: var(--purple);
+  }
+  .risk-quote-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 500; color: var(--text-50);
+    text-decoration: none;
+    margin-top: 20px;
+    transition: color 0.3s;
+  }
+  .risk-quote-link:hover { color: var(--purple); }
+  .risk-quote-link svg { width: 16px; height: 16px; transition: transform 0.3s; }
+  .risk-quote-link:hover svg { transform: translateX(4px); }
+
+  /* Stat cards */
+  .risk-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    position: relative; z-index: 2;
+    gap: clamp(12px, 2vw, 20px);
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+  .risk-stat-card {
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: clamp(24px, 3vw, 32px) clamp(20px, 2.5vw, 28px);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03), 0 4px 16px rgba(0,0,0,0.04);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .risk-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04), 0 12px 36px rgba(0,0,0,0.08);
+  }
+  .risk-stat-val {
+    font-family: 'HafferSQ', sans-serif;
+    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    font-weight: 700; color: var(--text);
+    line-height: 1; letter-spacing: -0.03em;
+  }
+  .risk-stat-val .counter-num {
+    display: inline-block;
+  }
+  .risk-stat-val span.unit {
+    font-size: 0.55em; font-weight: 600;
+    color: var(--text-50); letter-spacing: 0;
+    margin-left: 2px;
+  }
+  .risk-stat-desc {
+    margin-top: 8px; font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+    line-height: 1.45;
+  }
+  .risk-stat-desc .muted { color: var(--text-50); }
+  .risk-stat-desc .bold { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .risk-stats { grid-template-columns: 1fr; }
+    .risk-logos { gap: 12px; }
+    .risk-logo-card { width: 60px; height: 60px; border-width: 3px; border-radius: 12px; }
+    .risk-deco { display: none; }
+  }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials-section { padding: clamp(64px, 8vw, 96px) clamp(24px, 4vw, 96px); }
+  .testimonials-inner { max-width: 76rem; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(40px, 6vw, 52px); }
+  .testimonials-grid { display: flex; gap: 22px; }
+  .testimonials-col { flex: 1; display: flex; flex-direction: column; gap: 22px; }
+  .testimonial-card {
+    border-radius: 22px; padding: 28px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .testimonial-card:hover { transform: translateY(-4px); }
+  .testimonial-card.featured {
+    background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+  .testimonial-card.featured:hover { box-shadow: 0 8px 32px rgba(89,85,239,0.08); }
+  .testimonial-card:not(.featured) { background: #fafafa; border: 1px solid var(--grey-border-light); }
+  .testimonial-card.tall { flex: 1.8; }
+  .testimonial-card:not(.tall) { flex: 1; }
+  .testimonial-card .t-stars { color: #fbbf24; font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
+  .testimonial-card .t-text {
+    font-size: clamp(14px, 1.1vw, 16px); line-height: 1.55;
+    color: var(--text); white-space: pre-line;
+  }
+  .testimonial-card .t-author { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+  .testimonial-card .t-avatar {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 15px; color: #fff; flex-shrink: 0;
+  }
+  .testimonial-card .t-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .testimonial-card .t-vehicle { font-size: 13px; color: var(--text-50); }
+
+  @media (max-width: 900px) {
+    .testimonials-grid { flex-direction: column; }
+  }
+
+  /* ===== LAST CTA ===== */
+  .lastcta-section { padding-top: clamp(64px, 8vw, 96px); }
+  .lastcta-container {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 22px; margin: 0 16px;
+    padding: 72px 72px 0; overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(to bottom, var(--purple-dark), var(--purple));
+    position: relative;
+  }
+  .lastcta-container::before {
+    content: '';
+    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), transparent 60%);
+    pointer-events: none;
+  }
+  .lastcta-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .lastcta-container h2 {
+    font-family: 'Onest', sans-serif; color: #fff; text-align: center;
+    max-width: 492px; font-size: clamp(1.75rem, 3.5vw, 2.375rem);
+    font-weight: 600; line-height: 1.05; position: relative;
+  }
+  .lastcta-badges { display: flex; align-items: center; justify-content: center; gap: 12px; position: relative; }
+  .lastcta-badges img:first-child { width: 84px; height: 84px; object-fit: contain; }
+  .lastcta-badges img:last-child { height: auto; max-width: 200px; }
+  .lastcta-phone { position: relative; width: 446px; max-width: 100%; }
+  .lastcta-phone > img:first-child { width: 100%; height: auto; }
+  .lastcta-phone .rdv-overlay { width: 200px; position: absolute; top: -6%; right: -35%; }
+  .lastcta-phone .cta-btn {
+    position: absolute; bottom: 8%; left: 0; right: 0;
+    display: flex; justify-content: center;
+  }
+  .lastcta-phone .cta-btn a {
+    display: flex; align-items: center; justify-content: center;
+    background: var(--purple); color: #fff; border-radius: 9999px;
+    width: 314px; max-width: 100%; height: 50px;
+    font-weight: 700; font-family: 'Onest', sans-serif;
+    text-decoration: none;
+    box-shadow: 0 2px 21px rgba(0,0,0,0.08), 0 2px 32px rgba(89,85,239,0.42);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .lastcta-phone .cta-btn a:hover { transform: scale(1.04); }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    padding: 40px 16px;
+    border-top: 1px solid var(--grey-border);
+  }
+  .footer-inner {
+    max-width: 76rem; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-size: 1.125rem; font-weight: 700; color: var(--purple);
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-size: 13px; color: var(--text-50);
+    text-decoration: none; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--purple); }
+  .footer-copy { font-size: 12px; color: var(--text-30); }
+
+  /* ===== FLOATING BAR ===== */
+  .floating-bar {
+    position: fixed; z-index: 100;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--grey-border);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.05);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .floating-bar.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  .floating-bar a.fb-whatsapp {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+  }
+  .floating-bar a.fb-whatsapp svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .fb-whatsapp {
+    background: rgba(0,0,0,0.04);
+    color: var(--text);
+    border: 1px solid var(--grey-border);
+  }
+  .fb-whatsapp:hover {
+    background: #25D366;
+    color: #fff;
+    border-color: #25D366;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(37,211,102,0.3);
+  }
+  .fb-whatsapp svg { color: #25D366; transition: color 0.3s; }
+  .fb-whatsapp:hover svg { color: #fff; }
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hero-stamp { display: none; }
+    .location-card { grid-template-columns: 1fr; }
+    .loc-map-side { min-height: 250px; }
+    .loc-map-side::after { background: linear-gradient(180deg, var(--purple) 0%, transparent 30%); }
+    .steps-grid { grid-template-columns: 1fr; }
+    .rapport-content { flex-direction: column; }
+    .rapport-visual { min-height: 380px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .pricing-card.featured { transform: none; }
+    .pricing-card.featured:hover { transform: translateY(-4px); }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    .hero { padding: 8px 8px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce-bar">
+  <span>
+    <span class="announce-badge">Nouveau</span>
+    Notre centre d'inspection ouvre en avril 2026 a Tremblay-en-France (93)
+    <a href="#section-pricing">Reservez votre creneau <span class="announce-arrow">&rarr;</span></a>
+  </span>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-logo">
+    <img src="../006-certicar-inspection-backup/assets/images/cdn_prod_website-files_com_6834f8895107e966b13449ad_LOGO_045be391.svg" alt="Certicar" />
+  </div>
+  <div class="nav-links">
+    <a href="#section-steps">Comment ca marche ?</a>
+    <a href="#section-rapport">Rapport d'inspection</a>
+    <a href="#section-pricing">Tarifs</a>
+  </div>
+  <a href="#section-pricing" class="cta-3d">
+    <div class="cta-3d-inner">
+      <span class="cta-3d-text">Prendre RDV</span>
+      <div class="cta-3d-icon"><div class="cta-3d-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+    </div>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="section-header">
+  <div class="hero-container">
+    <div class="hero-video">
+      <iframe src="https://www.youtube.com/embed/L7m5gIb023s?si=h41q_ii0P0Lk6qGD&autoplay=1&mute=1&loop=1&playlist=L7m5gIb023s&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" title="bg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <div class="hero-noise"></div>
+    <div class="hero-grid"></div>
+
+    <div class="hero-stamp">
+      <span class="stamp-text">N.1 en</span>
+      <span class="stamp-val">IDF</span>
+      <span class="stamp-text">depuis 2023</span>
+    </div>
+
+    <div class="hero-spacer"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#4ade80; flex-shrink:0;">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        <span>Tremblay-en-France (93) — Proche aeroport CDG</span>
+        <div class="dot"></div>
+      </div>
+
+      <h1><span class="text-outline">Faites</span> verifier<br>votre voiture d'occasion<br>avant l'achat</h1>
+
+      <p class="hero-sub">
+        +2000 acheteurs proteges. Avec ou sans rendez-vous.<br>
+        Le centre d'inspection n°1 en Ile-de-France
+      </p>
+
+      <div class="hero-cta-wrap">
+        <a href="#section-pricing" class="cta-hero">
+          <div class="cta-hero-inner">
+            <span class="cta-hero-text">Demander une inspection</span>
+            <div class="cta-hero-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="hero-badge">
+        <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69862b41240e5e23f55f469e/778ee4747_Bagde-certicar-5stars.png" alt="Badge 5 etoiles Certicar" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<section class="logos-section reveal">
+  <div class="logos-inner">
+    <p>Toutes les marques, un seul standard d'excellence.</p>
+    <img src="../006-certicar-inspection-backup/assets/images/cdn_prod_website-files_com_690771d0f5f8fe2bdabe7f54_Car-brand-logos-certicar_a5b30adc.avif" alt="Logos marques auto" />
+  </div>
+</section>
+
+<!-- PLATFORMS / RISK SECTION -->
+<section class="risk-section reveal">
+  <div class="risk-container">
+  <div class="risk-inner">
+
+    <div class="risk-mechanic">
+      <img src="./assets/mechanic-sticker.png" alt="Expert Certicar" loading="lazy" />
+    </div>
+
+    <div class="risk-logos">
+      <div class="risk-logo-card">
+        <img src="./assets/logos/leboncoin-logo.png" alt="Leboncoin" />
+      </div>
+      <div class="risk-logo-card">
+        <img src="./assets/logos/lacentrale-logo.png" alt="La Centrale" />
+      </div>
+      <div class="risk-logo-card">
+        <img src="./assets/logos/autoscout24-logo.jpg" alt="Autoscout24" />
+      </div>
+    </div>
+
+    <div class="risk-quote">
+      <blockquote>"Belle annonce, bon prix, vendeur sympa — mais <span class="q-purple">qu'est-ce qui se cache sous le capot ?</span>"</blockquote>
+      <a href="#section-pricing" class="risk-quote-link">
+        Prendre RDV
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="risk-stats">
+      <div class="risk-mechanic-mobile">
+        <img src="./assets/mechanic-sticker.png" alt="Expert Certicar" loading="lazy" />
+      </div>
+      <div class="risk-stat-card">
+        <div class="risk-stat-val"><span class="counter-num" data-target="847" data-duration="2000">0</span><span class="unit">vices</span></div>
+        <div class="risk-stat-desc">
+          <span class="muted">caches detectes par nos experts</span><br>
+          <span class="bold">avant la vente</span>
+        </div>
+      </div>
+      <div class="risk-stat-card">
+        <div class="risk-stat-val"><span class="counter-num" data-target="2.3" data-decimals="1" data-duration="2000">0</span><span class="unit">M€</span></div>
+        <div class="risk-stat-desc">
+          <span class="muted">economises par nos clients</span><br>
+          <span class="bold">en reparations evitees</span>
+        </div>
+      </div>
+      <div class="risk-stat-card">
+        <div class="risk-stat-val"><span class="counter-num" data-target="98" data-duration="2000">0</span><span class="unit">%</span></div>
+        <div class="risk-stat-desc">
+          <span class="muted">de nos clients</span><br>
+          <span class="bold">achetent en toute confiance</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</section>
+
+<!-- POINTS D'INSPECTION — BENTO -->
+<section class="inspect-section" id="section-inspect">
+  <div class="inspect-inner">
+    <div class="section-header left" style="margin-bottom: clamp(24px, 3vw, 36px);">
+      <div class="section-label">NOS POINTS D'INSPECTION</div>
+      <h2 class="section-title">6 axes d'analyse, zero angle mort</h2>
+    </div>
+
+    <div class="inspect-layout">
+      <!-- Video verticale -->
+      <div class="inspect-video">
+        <!-- Remplacer par: <video src="votre-video.mp4" autoplay muted loop playsinline></video> -->
+      </div>
+
+      <!-- Grille 2x3 -->
+      <div class="inspect-grid">
+        <div class="inspect-card">
+          <div class="inspect-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83"/></svg></div>
+          <div>
+            <div class="inspect-card-num">01</div>
+            <div class="inspect-card-title">Moteur &amp;<br>transmission</div>
+          </div>
+          <div class="inspect-card-desc">Bloc moteur, huile, filtres, courroie, boite de vitesse</div>
+        </div>
+        <div class="inspect-card">
+          <div class="inspect-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div>
+            <div class="inspect-card-num">02</div>
+            <div class="inspect-card-title">Freinage &amp;<br>securite</div>
+          </div>
+          <div class="inspect-card-desc">Disques, plaquettes, liquide de frein, ABS, ESP</div>
+        </div>
+        <div class="inspect-card">
+          <div class="inspect-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6m-6 3h6m-6 3h4"/></svg></div>
+          <div>
+            <div class="inspect-card-num">03</div>
+            <div class="inspect-card-title">Electronique &amp;<br>diagnostic</div>
+          </div>
+          <div class="inspect-card-desc">Codes defaut, capteurs, systemes d'aide</div>
+        </div>
+        <div class="inspect-card">
+          <div class="inspect-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18 10l-2.7-3.4A2 2 0 0013.7 6H10.3a2 2 0 00-1.6.6L6 10l-2.5 1.1C2.7 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg></div>
+          <div>
+            <div class="inspect-card-num">04</div>
+            <div class="inspect-card-title">Carrosserie &amp;<br>peinture</div>
+          </div>
+          <div class="inspect-card-desc">Chocs, reparations, corrosion, panneaux</div>
+        </div>
+        <div class="inspect-card">
+          <div class="inspect-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9V6a2 2 0 00-2-2H6a2 2 0 00-2 2v3"/><path d="M2 11v5a2 2 0 002 2h16a2 2 0 002-2v-5a3 3 0 00-3-3H5a3 3 0 00-3 3z"/><path d="M12 18v3"/></svg></div>
+          <div>
+            <div class="inspect-card-num">05</div>
+            <div class="inspect-card-title">Interieur &amp;<br>confort</div>
+          </div>
+          <div class="inspect-card-desc">Sieges, clim, compteur, moquettes, odeurs</div>
+        </div>
+        <div class="inspect-card">
+          <div class="inspect-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
+          <div>
+            <div class="inspect-card-num">06</div>
+            <div class="inspect-card-title">Administratif &amp;<br>historique</div>
+          </div>
+          <div class="inspect-card-desc">VIN, carte grise, CT, historique entretien</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RAPPORT -->
+<section class="rapport-section reveal" id="section-rapport">
+  <div class="rapport-container">
+    <div class="rapport-inner">
+      <div class="rapport-header section-header left">
+        <div class="section-label">NOS RAPPORTS</div>
+        <h2 class="section-title">Un rapport clair,<br>complet et illustre</h2>
+      </div>
+
+      <div class="rapport-content">
+        <div class="rapport-tabs" id="rapportTabs">
+          <div class="rapport-tab active" data-tab="0">
+            <div class="tab-indicator"><div class="tab-fill"></div></div>
+            <div>
+              <h3>Un score global sur l'etat du vehicule</h3>
+              <p>Une note synthetique (de A a E) sur l'etat general du vehicule, basee sur nos 400 points d'analyse.</p>
+            </div>
+          </div>
+          <div class="rapport-tab" data-tab="1">
+            <div class="tab-indicator"><div class="tab-fill"></div></div>
+            <div>
+              <h3>Toutes les informations administratives</h3>
+              <p>Historique d'entretien, conformite du numero VIN, correspondance carte grise, controle technique.</p>
+            </div>
+          </div>
+          <div class="rapport-tab" data-tab="2">
+            <div class="tab-indicator"><div class="tab-fill"></div></div>
+            <div>
+              <h3>Le detail sur chaque section du vehicule</h3>
+              <p>Moteur, freinage, chassis, electronique, carrosserie : chaque partie est notee et commentee.</p>
+            </div>
+          </div>
+          <div class="rapport-tab" data-tab="3">
+            <div class="tab-indicator"><div class="tab-fill"></div></div>
+            <div>
+              <h3>Plus de 50 photos de references</h3>
+              <p>Envoyez le rapport a votre vendeur, votre assureur ou votre entourage en un clic.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="rapport-visual">
+          <div class="rapport-visual-grid"></div>
+          <div class="tab-panel active" data-panel="0">
+            <div class="score-gauge" id="scoreGauge">
+              <svg viewBox="0 0 180 180">
+                <circle class="gauge-bg" cx="90" cy="90" r="80" />
+                <circle class="gauge-fill" cx="90" cy="90" r="80" />
+              </svg>
+              <div class="score-center">
+                <div class="letter">A</div>
+                <div class="sublabel">Score global</div>
+              </div>
+            </div>
+            <div class="score-grades">
+              <div class="score-grade sg-a active">A</div>
+              <div class="score-grade sg-b">B</div>
+              <div class="score-grade sg-c">C</div>
+              <div class="score-grade sg-d">D</div>
+              <div class="score-grade sg-e">E</div>
+            </div>
+            <div class="panel-title" style="margin-top:20px">Score d'etat general</div>
+            <div class="panel-desc">Chaque vehicule recoit une note de A (excellent) a E (critique) basee sur 400+ points de controle.</div>
+          </div>
+
+          <div class="tab-panel" data-panel="1">
+            <div class="check-list" id="checkList">
+              <div class="check-item"><div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div><span>Historique d'entretien verifie</span></div>
+              <div class="check-item"><div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div><span>Numero VIN conforme</span></div>
+              <div class="check-item"><div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div><span>Carte grise verifiee</span></div>
+              <div class="check-item"><div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div><span>Controle technique a jour</span></div>
+              <div class="check-item"><div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div><span>Aucun gage ni opposition</span></div>
+            </div>
+            <div class="panel-title" style="margin-top:16px">Verification administrative</div>
+            <div class="panel-desc">Toutes les verifications legales en un seul rapport.</div>
+          </div>
+
+          <div class="tab-panel" data-panel="2">
+            <div class="bar-chart" id="barChart">
+              <div class="bar-row"><div class="bar-label">Moteur</div><div class="bar-track"><div class="bar-fill" data-width="92"></div></div><div class="bar-val">A</div></div>
+              <div class="bar-row"><div class="bar-label">Freinage</div><div class="bar-track"><div class="bar-fill" data-width="85"></div></div><div class="bar-val">B</div></div>
+              <div class="bar-row"><div class="bar-label">Chassis</div><div class="bar-track"><div class="bar-fill" data-width="78"></div></div><div class="bar-val">B</div></div>
+              <div class="bar-row"><div class="bar-label">Electronique</div><div class="bar-track"><div class="bar-fill" data-width="95"></div></div><div class="bar-val">A</div></div>
+              <div class="bar-row"><div class="bar-label">Carrosserie</div><div class="bar-track"><div class="bar-fill" data-width="70"></div></div><div class="bar-val">C</div></div>
+            </div>
+            <div class="panel-title" style="margin-top:16px">Detail par section</div>
+            <div class="panel-desc">Chaque partie du vehicule est notee individuellement.</div>
+          </div>
+
+          <div class="tab-panel" data-panel="3">
+            <div class="photo-grid-visual" id="photoGrid">
+              <div class="photo-cell"><span class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+              <div class="photo-cell"><span class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+              <div class="photo-cell"><span class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+              <div class="photo-cell"><span class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+              <div class="photo-cell highlight"><span class="big-num">50+</span></div>
+              <div class="photo-cell"><span class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+              <div class="photo-cell"><span class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+              <div class="photo-cell"><span class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+              <div class="photo-cell"><span class="cam"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span></div>
+            </div>
+            <div class="panel-title" style="margin-top:16px">Photos haute qualite</div>
+            <div class="panel-desc">Plus de 50 photos HD dans chaque rapport d'inspection.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps-section reveal" id="section-steps">
+  <div class="steps-inner">
+    <div class="section-header">
+      <div class="section-label">COMMENT CA MARCHE ?</div>
+      <h2 class="section-title wide">Venez avec votre vehicule, on s'occupe du reste</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <img src="../006-certicar-inspection-backup/assets/images/cdn_prod_website-files_com_6907e9b221ac2617e7af3098_img2stepscerticar_3f3dd3d7.avif" alt="" loading="lazy" />
+        <div class="step-gradient"></div>
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-row">
+            <div class="step-num-badge">1</div>
+            <div class="step-text">
+              <h3>Venez avec ou sans RDV</h3>
+              <p>Reservez votre creneau en ligne ou passez directement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-card">
+        <img src="../006-certicar-inspection-backup/assets/images/cdn_prod_website-files_com_6907eb5056f332c74e0767eb_img3stepscerticar_5e26b00f.avif" alt="" loading="lazy" />
+        <div class="step-gradient"></div>
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-row">
+            <div class="step-num-badge">2</div>
+            <div class="step-text">
+              <h3>Attendez l'inspection</h3>
+              <p>L'inspection dure environ 1h a 1h30, selon le vehicule.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-card">
+        <img src="../006-certicar-inspection-backup/assets/images/cdn_prod_website-files_com_6907eb4fd835486e2c8b2aa8_img22stepscerticar_afb2a7ce.avif" alt="" loading="lazy" />
+        <div class="step-gradient"></div>
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-row">
+            <div class="step-num-badge">3</div>
+            <div class="step-text">
+              <h3>Recevez votre rapport</h3>
+              <p>Rapport complet, illustre et explique par nos experts.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER + LED -->
+<div class="ticker-wrap reveal">
+  <div class="ticker">
+    <div class="ticker-inner" id="ticker1"></div>
+  </div>
+  <div class="led-glow"></div>
+</div>
+
+<!-- PRICING -->
+<section class="pricing-section reveal" id="section-pricing">
+  <div class="pricing-inner">
+    <div class="section-header left">
+      <div class="section-label">TARIFS</div>
+      <h2 class="section-title wide">Des tarifs transparents, sans surprise ni frais caches</h2>
+      <p class="section-sub">Une seule visite, un rapport complet. Choisissez la formule qui correspond a votre besoin.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="card-label">ESSENTIEL</div>
+        <div class="card-name">Basic</div>
+        <div class="card-desc">L'inspection de base pour un achat serein.</div>
+        <div class="card-price">99&#8364;</div>
+        <div class="card-price-sub">Par inspection</div>
+        <ul class="card-features">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>200+ points de controle</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Rapport numerique</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Score de A a E</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>20 photos</li>
+        </ul>
+        <a href="#" class="pricing-btn pricing-btn-default">Reserver</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="popular-badge">POPULAIRE</div>
+        <div class="card-label">COMPLET</div>
+        <div class="card-name">Premium</div>
+        <div class="card-desc">L'inspection la plus complete du marche.</div>
+        <div class="card-price">149&#8364;</div>
+        <div class="card-price-sub">Par inspection</div>
+        <ul class="card-features">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>400+ points de controle</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Rapport illustre complet</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>50+ photos HD</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Essai routier inclus</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Verification administrative</li>
+        </ul>
+        <a href="#" class="pricing-btn pricing-btn-featured">Reserver maintenant</a>
+      </div>
+      <div class="pricing-card">
+        <div class="card-label">SUR MESURE</div>
+        <div class="card-name">Pro</div>
+        <div class="card-desc">Pour les professionnels et flottes.</div>
+        <div class="card-price">Sur devis</div>
+        <div class="card-price-sub">Tarif degressif</div>
+        <ul class="card-features">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Tout le Premium</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Tarifs volume</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Dashboard pro</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Support prioritaire</li>
+        </ul>
+        <a href="#" class="pricing-btn pricing-btn-default">Nous contacter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section reveal" id="section-testimonials">
+  <div class="testimonials-inner">
+    <div class="section-header">
+      <div class="section-label">AVIS CLIENTS</div>
+      <h2 class="section-title wide">Ils ont fait inspecter leur vehicule avant d'acheter</h2>
+      <p class="section-sub" style="text-align:center">Plus de 2000 clients nous ont fait confiance depuis 2023. Voici ce qu'ils en disent.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonials-col">
+        <div class="testimonial-card featured tall">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-text">"Je pensais acheter une Clio en bon etat, mais grace a l'inspection Certicar j'ai decouvert un probleme moteur invisible a l'oeil nu.
+
+Inspection ultra pro, rapport clair et complet."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background: linear-gradient(135deg, #5955ef, #8b87ff);">J</div>
+            <div><div class="t-name">Julien R.</div><div class="t-vehicle">Renault Clio 4 (2018)</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-text">"L'equipe m'a permis de negocier 800 euros de moins grace au rapport d'inspection. Service rapide et personnel tres accueillant."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background: linear-gradient(135deg, #f97316, #fb923c);">S</div>
+            <div><div class="t-name">Sophie M.</div><div class="t-vehicle">Peugeot 3008 (2020)</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonials-col">
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-text">"Inspection tres complete, avec photos et tout. Je suis reparti confiant, sans stress."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background: linear-gradient(135deg, #22c55e, #4ade80);">T</div>
+            <div><div class="t-name">Thomas B.</div><div class="t-vehicle">BMW Serie 3 (2020)</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card featured tall">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-text">"Je ne connaissais pas ce genre de service, et franchement, c'est indispensable avant d'acheter. On voit tout, meme les petits defauts caches."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background: linear-gradient(135deg, #ec4899, #f472b6);">C</div>
+            <div><div class="t-name">Camille L.</div><div class="t-vehicle">Audi A3 (2019)</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonials-col">
+        <div class="testimonial-card featured tall">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-text">"Service au top, un rapport hyper detaille avec plus de 50 photos. J'ai pu negocier sereinement et acheter en toute confiance."</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background: linear-gradient(135deg, #6366f1, #818cf8);">L</div>
+            <div><div class="t-name">Lea P.</div><div class="t-vehicle">Tesla Model 3 (2022)</div></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="t-text">"Le rapport est tellement detaille que le vendeur a baisse son prix tout seul. Merci Certicar !"</p>
+          <div class="t-author">
+            <div class="t-avatar" style="background: linear-gradient(135deg, #eab308, #facc15);">M</div>
+            <div><div class="t-name">Marc D.</div><div class="t-vehicle">Volkswagen Golf 8 (2021)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section reveal">
+  <div class="location-card">
+    <div class="loc-content">
+      <div class="loc-eyebrow"><span class="loc-dot"></span> NOTRE CENTRE</div>
+      <h3>Venez nous voir a<br>Tremblay-en-France</h3>
+      <div class="loc-desc">A deux pas de l'aeroport CDG. Acces direct depuis l'A1 et l'A3. Avec ou sans rendez-vous.</div>
+      <div class="loc-details">
+        <div class="loc-detail">
+          <div class="loc-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          Tremblay-en-France (93)
+        </div>
+        <div class="loc-detail">
+          <div class="loc-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          Avec ou sans rendez-vous
+        </div>
+        <div class="loc-detail">
+          <div class="loc-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></div>
+          Acces direct A1 / A3
+        </div>
+      </div>
+    </div>
+    <div class="loc-map-side">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2618.5!2d2.5731!3d48.9556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDU3JzIwLjIiTiAywrAzNCcyMy4yIkU!5e0!3m2!1sfr!2sfr!4v1" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- LAST CTA -->
+<section class="lastcta-section reveal" id="section-lastCTA">
+  <div class="lastcta-container">
+    <div class="lastcta-grid"></div>
+    <h2>Le centre d'inspection automobile le plus complet de France</h2>
+    <div class="lastcta-badges">
+      <img src="../006-certicar-inspection-backup/assets/images/cdn_prod_website-files_com_6834e7a2eb440f943412baed_certicar-factures-badge_9981c5be.png" alt="Badge" />
+      <img src="../006-certicar-inspection-backup/assets/images/cdn_prod_website-files_com_6834e7a1a8f954ed65142be2_certicar-factures-ratings_982d6089.png" alt="Ratings" />
+    </div>
+    <div class="lastcta-phone">
+      <img src="../006-certicar-inspection-backup/assets/images/cdn_prod_website-files_com_6907caa3cf4c36700254e346_phonelocationcerticar_e2b34882.avif" alt="" />
+      <img class="rdv-overlay" src="../006-certicar-inspection-backup/assets/images/cdn_prod_website-files_com_6907cc0df205e1e50512fa1d_prenezRDVcerticarfooter_fcea3214.png" alt="" />
+      <div class="cta-btn"><a href="#section-pricing">Demander une inspection</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Certicar</div>
+    <div class="footer-links">
+      <a href="#">Mentions legales</a>
+      <a href="#">Contact</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="footer-copy">&copy; 2025 Certicar. Tous droits reserves.</div>
+  </div>
+</footer>
+
+<!-- FLOATING BAR -->
+<div class="floating-bar" id="floatingBar">
+  <a href="#section-pricing" class="cta-3d">
+    <div class="cta-3d-inner">
+      <span class="cta-3d-text">Prendre RDV</span>
+      <div class="cta-3d-icon"><div class="cta-3d-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+    </div>
+  </a>
+  <a href="https://wa.me/33696655999" target="_blank" class="fb-whatsapp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp
+  </a>
+</div>
+
+<script>
+// Counter animation for risk stats
+const counterObs2 = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals) || 0;
+    const dur = parseInt(el.dataset.duration) || 2000;
+    const start = performance.now();
+    function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+    function anim(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const val = ease(p) * target;
+      el.textContent = decimals > 0 ? val.toFixed(decimals) : Math.floor(val).toLocaleString('fr-FR');
+      if (p < 1) requestAnimationFrame(anim);
+    }
+    requestAnimationFrame(anim);
+    counterObs2.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter-num').forEach(el => counterObs2.observe(el));
+
+// Ticker
+const tickerItems = [
+  'INSPECTION COMPLETE', '400+ POINTS DE CONTROLE', 'AVEC OU SANS RDV',
+  'RAPPORT DETAILLE', 'SCORE A-E', '50+ PHOTOS HD',
+  'TREMBLAY-EN-FRANCE', 'N°1 EN ILE-DE-FRANCE', 'ACHAT SECURISE',
+  '98% CLIENTS SATISFAITS', '+2000 VEHICULES INSPECTES'
+];
+function fillTicker(id) {
+  const el = document.getElementById(id);
+  let html = '';
+  for (let r = 0; r < 3; r++) {
+    tickerItems.forEach(item => {
+      html += `<span class="ticker-item">${item}<span class="sep"></span></span>`;
+    });
+  }
+  el.innerHTML = html;
+}
+fillTicker('ticker1');
+
+// Navbar scroll + floating bar
+const navbar = document.getElementById('navbar');
+const floatingBar = document.getElementById('floatingBar');
+const heroSection = document.getElementById('section-header');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+
+  const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+  floatingBar.classList.toggle('visible', window.scrollY > heroBottom - 200);
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => revealObs.observe(el));
+
+// Hero stats are hardcoded
+
+// Why section counters
+const whyCounters = document.querySelectorAll('.counter[data-target]');
+let whyCounted = false;
+const whyObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !whyCounted) {
+      whyCounted = true;
+      animateCounters(whyCounters);
+    }
+  });
+}, { threshold: 0.5 });
+whyCounters.forEach(s => whyObs.observe(s));
+
+function animateCounters(els) {
+  els.forEach(stat => {
+    const target = parseInt(stat.dataset.target);
+    const suffix = stat.dataset.suffix || '';
+    const duration = 2000;
+    const start = performance.now();
+    function update(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      stat.textContent = Math.round(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
+}
+
+// Rapport tabs
+const tabs = document.querySelectorAll('.rapport-tab');
+const panels = document.querySelectorAll('.tab-panel');
+const TAB_DURATION = 5000;
+let currentTab = 0, tabTimer = null;
+
+function activateTab(index) {
+  tabs.forEach((t, i) => {
+    t.classList.remove('active');
+    if (i < index) t.classList.add('done'); else t.classList.remove('done');
+  });
+  panels.forEach(p => p.classList.remove('active'));
+  tabs[index].classList.add('active');
+  const panel = document.querySelector(`[data-panel="${index}"]`);
+  if (panel) panel.classList.add('active');
+
+  if (index === 0) {
+    const g = document.getElementById('scoreGauge');
+    g.classList.remove('animated'); void g.offsetWidth; g.classList.add('animated');
+  }
+  if (index === 1) {
+    document.querySelectorAll('#checkList .check-item').forEach((item, i) => {
+      item.classList.remove('visible');
+      setTimeout(() => item.classList.add('visible'), i * 200);
+    });
+  }
+  if (index === 2) {
+    document.querySelectorAll('#barChart .bar-fill').forEach((bar, i) => {
+      bar.style.width = '0%';
+      setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, i * 150);
+    });
+  }
+  if (index === 3) {
+    document.querySelectorAll('#photoGrid .photo-cell').forEach((cell, i) => {
+      cell.classList.remove('visible');
+      setTimeout(() => cell.classList.add('visible'), i * 100);
+    });
+  }
+
+  currentTab = index;
+  clearTimeout(tabTimer);
+  tabTimer = setTimeout(() => activateTab((currentTab + 1) % tabs.length), TAB_DURATION);
+}
+
+tabs.forEach((tab, i) => tab.addEventListener('click', () => activateTab(i)));
+
+const rapportObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { activateTab(0); rapportObs.unobserve(e.target); }
+  });
+}, { threshold: 0.3 });
+rapportObs.observe(document.getElementById('rapportTabs'));
+
+document.documentElement.style.setProperty('--tab-duration', (TAB_DURATION / 1000) + 's');
+
+</script>
+</body>
+</html>
