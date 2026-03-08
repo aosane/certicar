@@ -57,7 +57,7 @@
     position: relative; z-index: 101;
   }
   .announce-bar span {
-    display: inline-flex; align-items: center; gap: 10px;
+    display: inline-flex; align-items: center; gap: 14px;
   }
   .announce-badge {
     display: inline-block;
@@ -253,6 +253,7 @@
   .hero-eyebrow span {
     color: rgba(255,255,255,0.9); font-size: 12px;
     font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    text-align: center; line-height: 1.5;
   }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
@@ -1959,20 +1960,46 @@
     .steps-grid { grid-template-columns: 1fr; }
     .step-card { height: 220px; }
     .step-text h3, .rapport-item h4, .pricing-card-name { font-size: 1.125rem; }
+    .rapport-tab h3 { font-size: 1.05rem; }
     .rapport-content { grid-template-columns: 1fr; }
-    .rapport-visual { min-height: 380px; }
+    .rapport-visual { min-height: 380px; padding: 24px 16px; }
+    .report-mockup-card { transform: none; max-width: 100%; }
+    .report-mockup-card:hover { transform: none; }
+    .rmc-score { padding: 20px 16px 16px; }
+    .rmc-score-grid { gap: 8px; }
+    .rmc-score h4 { font-size: 14px; margin-bottom: 14px; }
+    .rmc-metric-label { font-size: 8px; }
+    .rmc-note-circle { width: 52px; height: 52px; }
+    .rmc-note-letter { font-size: 20px; }
+    .rmc-note-sub { font-size: 18px; }
+    .rmc-note-sub span { font-size: 11px; }
+    .rmc-sommaire { padding: 16px; }
+    .rmc-sommaire h4 { font-size: 13px; }
+    .rmc-row-label { font-size: 11px; }
+    .rmc-pill { width: 28px; height: 28px; font-size: 10px; }
+    .rmc-pill-label { font-size: 6px; }
+    .rmc-progress { margin: 12px 16px 0; }
     .rapport-header-row { flex-direction: column; gap: 16px; }
     .pricing-grid { grid-template-columns: repeat(2, 1fr); }
     .pricing-header-row { flex-direction: column; gap: 24px; }
-    .pricing-search { max-width: 100%; }
+    .pricing-search { display: none; }
+    .ticker-inner { animation-duration: 14s; }
   }
   @media (max-width: 580px) {
     .pricing-grid { grid-template-columns: 1fr; }
     .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
     .hero { padding: 8px 8px 0; }
-    .announce-bar { font-size: 14px; padding: 10px 16px; }
-    .announce-bar span { flex-wrap: nowrap; gap: 6px; }
+    .announce-bar { font-size: 14px; padding: 10px 16px; -webkit-tap-highlight-color: transparent; user-select: none; pointer-events: none; }
+    .announce-bar span { flex-wrap: nowrap; gap: 8px; }
     .announce-bar a { display: none; }
+    .hero-eyebrow { -webkit-tap-highlight-color: transparent; user-select: none; pointer-events: none; }
+    .floating-bar { width: calc(100% - 32px); left: 16px; transform: translateX(0) translateY(100px); bottom: 12px; }
+    .floating-bar.visible { transform: translateX(0) translateY(0); }
+    .floating-bar > .cta-3d { flex: 1 1 50%; min-width: 0; }
+    .floating-bar > .cta-3d .cta-3d-inner { width: 100%; }
+    .floating-bar > .cta-3d .cta-3d-text { flex: 1; text-align: center; padding: 9px 8px; }
+    .floating-bar > .fb-whatsapp { flex: 1 1 50%; min-width: 0; }
+    .floating-bar a.fb-whatsapp { justify-content: center; padding: 12px 12px; box-sizing: border-box; }
   }
 </style>
 </head>
@@ -2026,14 +2053,15 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#4ade80; flex-shrink:0;">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
         </svg>
-        <span>Tremblay-en-France (93) — Proche aeroport CDG</span>
+        <span>Tremblay-en-France (93)<br>Proche aeroport CDG</span>
         <div class="dot"></div>
       </div>
 
       <h1><span class="text-outline">Faites</span> verifier<br>votre voiture d'occasion<br>avant l'achat</h1>
 
       <p class="hero-sub">
-        +2000 acheteurs proteges. Avec ou sans rendez-vous.<br>
+        +2000 acheteurs proteges.<br>
+        Avec ou sans rendez-vous.<br>
         Le centre d'inspection n°1 en Ile-de-France
       </p>
 
@@ -2768,13 +2796,22 @@ Inspection ultra pro, rapport clair et complet."</p>
     }, 200);
   }
 
+  const isMobile = () => window.innerWidth <= 900;
+
+  // Click only on desktop
   cards.forEach((card, i) => {
     card.addEventListener('click', () => {
+      if (isMobile()) return;
       clearTimeout(autoTimeout);
       activateCard(i);
       scheduleNext();
     });
   });
+
+  // Disable pointer on mobile
+  if (isMobile()) {
+    cards.forEach(card => card.style.cursor = 'default');
+  }
 
   function scheduleNext() {
     clearTimeout(autoTimeout);
@@ -2785,23 +2822,37 @@ Inspection ultra pro, rapport clair et complet."</p>
     }, CYCLE_MS);
   }
 
-  const isMobile = () => window.innerWidth <= 900;
-
-  // Mobile: scroll-driven activation
+  // Mobile: scroll-driven activation (both directions)
   if (isMobile()) {
-    const scrollObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const i = parseInt(e.target.dataset.inspect);
-          if (i !== current) {
-            clearTimeout(autoTimeout);
-            activateCard(i);
-          }
+    function mobileScrollCheck() {
+      let best = -1;
+      let bestDist = Infinity;
+      const viewCenter = window.innerHeight / 2;
+      cards.forEach((card, i) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(cardCenter - viewCenter);
+        if (dist < bestDist && rect.top < window.innerHeight && rect.bottom > 0) {
+          bestDist = dist;
+          best = i;
         }
       });
-    }, { threshold: 0.6, rootMargin: '-30% 0px -30% 0px' });
+      if (best !== -1 && best !== current) {
+        clearTimeout(autoTimeout);
+        activateCard(best);
+      }
+    }
 
-    cards.forEach(card => scrollObs.observe(card));
+    let scrollTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!scrollTicking) {
+        requestAnimationFrame(() => {
+          mobileScrollCheck();
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }, { passive: true });
   }
 
   // Desktop: auto-cycle when visible
