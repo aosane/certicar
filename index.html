@@ -1632,6 +1632,8 @@
 
   @media (max-width: 900px) {
     .testimonials-grid { flex-direction: column; }
+    .testimonials-col:nth-child(3) { display: none; }
+    .testimonials-col:nth-child(2) .testimonial-card:nth-child(2) { display: none; }
   }
 
   /* ===== LAST CTA ===== */
@@ -1709,6 +1711,44 @@
   }
   .footer-links a:hover { color: var(--purple); }
   .footer-copy { font-size: 12px; color: var(--text-30); }
+
+  /* ===== FAQ ===== */
+  .faq-section { padding: clamp(48px, 6vw, 64px) clamp(24px, 4vw, 96px); }
+  .faq-inner { max-width: 66rem; margin: 0 auto; }
+  .faq-list { display: flex; flex-direction: column; }
+  .faq-item { border-bottom: 1px solid var(--grey-border); }
+  .faq-item:first-child { border-top: 1px solid var(--grey-border); }
+  .faq-question {
+    width: 100%; background: none; border: none;
+    padding: 24px 0;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; cursor: pointer;
+    font-family: 'Onest', sans-serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--text);
+    text-align: left; line-height: 1.3;
+    transition: color 0.3s;
+  }
+  .faq-question:hover { color: var(--purple); }
+  .faq-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    border-radius: 50%; background: var(--grey-bg);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .faq-item.open .faq-icon { background: var(--purple); transform: rotate(45deg); }
+  .faq-icon svg { width: 14px; height: 14px; color: var(--text-50); transition: color 0.3s; }
+  .faq-item.open .faq-icon svg { color: #fff; }
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+    opacity: 0;
+  }
+  .faq-item.open .faq-answer { max-height: 200px; opacity: 1; }
+  .faq-answer p {
+    padding: 0 0 24px; font-size: 0.95rem;
+    color: var(--text-50); line-height: 1.65; max-width: 540px;
+  }
 
   /* ===== FLOATING BAR ===== */
   .floating-bar {
@@ -1850,24 +1890,6 @@
   .booking-step.active { display: flex; }
   @keyframes stepIn { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
   .booking-step-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  .forfait-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .forfait-option {
-    display: flex; flex-direction: column; padding: 14px 16px; border-radius: 14px;
-    border: 1.5px solid var(--grey-border); background: #fff; cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.16,1,0.3,1); position: relative;
-  }
-  .forfait-option:hover { border-color: rgba(89,85,239,0.3); background: var(--purple-glow); }
-  .forfait-option.selected { border-color: var(--purple); background: var(--purple-glow); box-shadow: 0 0 0 3px rgba(89,85,239,0.1); }
-  .forfait-option .forfait-name { font-size: 14px; font-weight: 700; color: var(--text); }
-  .forfait-option .forfait-desc { font-size: 12px; color: var(--text-50); margin-top: 2px; }
-  .forfait-option .forfait-price { font-size: 18px; font-weight: 800; color: var(--purple); margin-top: 8px; }
-  .forfait-check {
-    position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; border-radius: 50%;
-    background: var(--purple); color: #fff; display: flex; align-items: center; justify-content: center;
-    opacity: 0; transform: scale(0.5); transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .forfait-option.selected .forfait-check { opacity: 1; transform: scale(1); }
-  .forfait-check svg { width: 12px; height: 12px; }
   .booking-field { display: flex; flex-direction: column; gap: 5px; }
   .booking-field label { font-size: 12px; font-weight: 600; color: var(--text-50); text-transform: uppercase; letter-spacing: 0.5px; }
   .booking-field input, .booking-field select {
@@ -1935,7 +1957,8 @@
     .loc-map-side { min-height: 250px; }
     .loc-map-side { padding: 0 16px 16px; }
     .steps-grid { grid-template-columns: 1fr; }
-    .step-card { height: 280px; }
+    .step-card { height: 220px; }
+    .step-text h3, .rapport-item h4, .pricing-card-name { font-size: 1.125rem; }
     .rapport-content { grid-template-columns: 1fr; }
     .rapport-visual { min-height: 380px; }
     .rapport-header-row { flex-direction: column; gap: 16px; }
@@ -1947,6 +1970,9 @@
     .pricing-grid { grid-template-columns: 1fr; }
     .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
     .hero { padding: 8px 8px 0; }
+    .announce-bar { font-size: 14px; padding: 10px 16px; }
+    .announce-bar span { flex-wrap: nowrap; gap: 6px; }
+    .announce-bar a { display: none; }
   }
 </style>
 </head>
@@ -1956,8 +1982,7 @@
 <div class="announce-bar">
   <span>
     <span class="announce-badge">Nouveau</span>
-    Notre centre d'inspection ouvre en avril 2026 a Tremblay-en-France (93)
-    <a href="#section-pricing">Reservez votre creneau <span class="announce-arrow">&rarr;</span></a>
+    Ouverture en avril 2026
   </span>
 </div>
 
@@ -2374,7 +2399,7 @@
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>VW Polo</li>
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Citroen C3</li>
         </ul>
-        <a href="#" class="pricing-btn pricing-btn-featured" data-booking-trigger data-preselect-forfait="citadine">Prendre rendez-vous</a>
+        <a href="#" class="pricing-btn pricing-btn-featured" data-booking-trigger>Prendre rendez-vous</a>
       </div>
       <div class="pricing-card">
         <div class="card-label">BERLINE</div>
@@ -2388,7 +2413,7 @@
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>BMW Serie 3</li>
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Peugeot 508</li>
         </ul>
-        <a href="#" class="pricing-btn pricing-btn-default" data-booking-trigger data-preselect-forfait="berline">Prendre rendez-vous</a>
+        <a href="#" class="pricing-btn pricing-btn-default" data-booking-trigger>Prendre rendez-vous</a>
       </div>
       <div class="pricing-card">
         <div class="card-label">SUV</div>
@@ -2402,7 +2427,7 @@
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Mercedes GLC</li>
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>BMW X3</li>
         </ul>
-        <a href="#" class="pricing-btn pricing-btn-default" data-booking-trigger data-preselect-forfait="suv">Prendre rendez-vous</a>
+        <a href="#" class="pricing-btn pricing-btn-default" data-booking-trigger>Prendre rendez-vous</a>
       </div>
       <div class="pricing-card">
         <div class="card-label">PREMIUM</div>
@@ -2416,7 +2441,7 @@
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Mercedes AMG</li>
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Audi RS</li>
         </ul>
-        <a href="#" class="pricing-btn pricing-btn-default" data-booking-trigger data-preselect-forfait="premium">Prendre rendez-vous</a>
+        <a href="#" class="pricing-btn pricing-btn-default" data-booking-trigger>Prendre rendez-vous</a>
       </div>
     </div>
   </div>
@@ -2518,6 +2543,63 @@ Inspection ultra pro, rapport clair et complet."</p>
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq-section reveal">
+  <div class="faq-inner">
+    <div class="section-header">
+      <span class="section-label">Questions frequentes</span>
+      <h2 class="section-title">Encore des questions ?</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Combien de temps dure une inspection ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        </button>
+        <div class="faq-answer">
+          <p>Une inspection complete prend en moyenne 45 minutes a 1 heure. Vous pouvez attendre sur place ou nous laisser le vehicule et revenir le recuperer.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Dois-je etre present pendant l'inspection ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        </button>
+        <div class="faq-answer">
+          <p>Non, ce n'est pas obligatoire. Vous deposez votre vehicule et nous vous envoyons le rapport complet par email des que l'inspection est terminee.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Que se passe-t-il si des problemes sont detectes ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        </button>
+        <div class="faq-answer">
+          <p>Chaque probleme est documente avec photos et niveau de gravite dans votre rapport. Vous aurez toutes les informations pour negocier le prix ou decider de ne pas acheter.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Puis-je venir sans rendez-vous ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        </button>
+        <div class="faq-answer">
+          <p>Oui, nous acceptons les visites sans rendez-vous. Cependant, prendre RDV vous garantit un creneau immediat sans attente.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Le rapport est-il utilisable pour la revente ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        </button>
+        <div class="faq-answer">
+          <p>Absolument. Le rapport CertiCar est un gage de transparence qui rassure les acheteurs et peut accelerer la vente de votre vehicule.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- LAST CTA -->
 <section class="lastcta-section reveal" id="section-lastCTA">
   <div class="lastcta-container">
@@ -2586,83 +2668,29 @@ Inspection ultra pro, rapport clair et complet."</p>
     <div class="booking-steps">
       <div class="booking-step-dot active" data-step="0"></div>
       <div class="booking-step-dot" data-step="1"></div>
-      <div class="booking-step-dot" data-step="2"></div>
     </div>
 
     <div class="booking-body">
-      <!-- Step 1: Forfait -->
+      <!-- Step 1: Creneau -->
       <div class="booking-step active" data-booking-step="0">
-        <div class="booking-step-title">Choisissez votre forfait</div>
-        <div class="forfait-grid">
-          <div class="forfait-option" data-forfait="citadine" data-price="150">
-            <div class="forfait-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
-            <div class="forfait-name">Citadine</div>
-            <div class="forfait-desc">Clio, 208, Polo, C3...</div>
-            <div class="forfait-price">150&euro;</div>
-          </div>
-          <div class="forfait-option" data-forfait="berline" data-price="200">
-            <div class="forfait-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
-            <div class="forfait-name">Berline</div>
-            <div class="forfait-desc">A4, Model 3, Serie 3...</div>
-            <div class="forfait-price">200&euro;</div>
-          </div>
-          <div class="forfait-option" data-forfait="suv" data-price="250">
-            <div class="forfait-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
-            <div class="forfait-name">SUV</div>
-            <div class="forfait-desc">3008, Tiguan, GLC...</div>
-            <div class="forfait-price">250&euro;</div>
-          </div>
-          <div class="forfait-option" data-forfait="premium" data-price="400">
-            <div class="forfait-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
-            <div class="forfait-name">Premium</div>
-            <div class="forfait-desc">911, M3, AMG, RS...</div>
-            <div class="forfait-price">400&euro;</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 2: Vehicle -->
-      <div class="booking-step" data-booking-step="1">
-        <div class="booking-step-title">Informations du vehicule</div>
-        <div class="booking-field">
-          <label>Plaque d'immatriculation</label>
-          <input type="text" placeholder="AA-123-BB" id="bookingPlate" style="text-transform: uppercase; letter-spacing: 2px; font-weight: 700;" />
-        </div>
-        <div class="booking-row">
-          <div class="booking-field">
-            <label>Marque</label>
-            <input type="text" placeholder="Peugeot" id="bookingBrand" />
-          </div>
-          <div class="booking-field">
-            <label>Modele</label>
-            <input type="text" placeholder="3008" id="bookingModel" />
-          </div>
-        </div>
-        <div class="booking-row">
-          <div class="booking-field">
-            <label>Annee</label>
-            <input type="text" placeholder="2021" id="bookingYear" />
-          </div>
-          <div class="booking-field">
-            <label>Kilometrage</label>
-            <input type="text" placeholder="45 000 km" id="bookingKm" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 3: Date + Contact -->
-      <div class="booking-step" data-booking-step="2">
-        <div class="booking-step-title">Date et coordonnees</div>
+        <div class="booking-step-title">Choisissez votre creneau</div>
         <div class="booking-date-grid" id="bookingDates"></div>
-        <div class="booking-row" style="margin-top: 4px;">
-          <div class="booking-field">
-            <label>Prenom</label>
-            <input type="text" placeholder="Mehdi" id="bookingFirstname" />
-          </div>
-          <div class="booking-field">
-            <label>Telephone</label>
-            <input type="tel" placeholder="06 12 34 56 78" id="bookingPhone" />
-          </div>
+      </div>
+
+      <!-- Step 2: Contact -->
+      <div class="booking-step" data-booking-step="1">
+        <div class="booking-step-title">Vos coordonnees</div>
+        <div class="booking-field">
+          <label>Prenom</label>
+          <input type="text" placeholder="Mehdi" id="bookingFirstname" />
+        </div>
+        <div class="booking-field">
+          <label>Email</label>
+          <input type="email" placeholder="mehdi@exemple.fr" id="bookingEmail" />
+        </div>
+        <div class="booking-field">
+          <label>Telephone</label>
+          <input type="tel" placeholder="06 12 34 56 78" id="bookingPhone" />
         </div>
       </div>
 
@@ -2672,7 +2700,7 @@ Inspection ultra pro, rapport clair et complet."</p>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
         </div>
         <div class="booking-success-title">Rendez-vous confirme !</div>
-        <div class="booking-success-desc">Nous vous recontactons sous 2h pour finaliser votre creneau. Merci de votre confiance.</div>
+        <div class="booking-success-desc" id="bookingSuccessDesc"></div>
       </div>
     </div>
 
@@ -2992,25 +3020,30 @@ function animateCounters(els) {
 
   const steps = document.querySelectorAll('.booking-step');
   const dots = document.querySelectorAll('.booking-step-dot');
-  const forfaitOptions = document.querySelectorAll('.forfait-option');
   const dateGrid = document.getElementById('bookingDates');
+  const successDesc = document.getElementById('bookingSuccessDesc');
 
   let currentStep = 0;
-  let selectedForfait = null;
   let isOpen = false;
   let savedBarRect = null;
+  let selectedSlotLabel = '';
 
   const MORPH_MS = 550;
   const EASING = 'cubic-bezier(0.32, 0.72, 0, 1)';
 
+  // Full month names for success message
+  const moisNoms = ['janvier','fevrier','mars','avril','mai','juin','juillet','aout','septembre','octobre','novembre','decembre'];
+
   function generateDates() {
     const days = ['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
+    const fullDays = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
     const times = ['9h00','10h30','14h00','16h00','9h30','11h00','14h30','15h00'];
     let html = ''; const now = new Date(); let count = 0;
     for (let d = 2; count < 8; d++) {
       const date = new Date(now); date.setDate(date.getDate() + d);
       if (date.getDay() === 0) continue;
-      html += `<div class="booking-date-slot" data-date="${d}">
+      const label = fullDays[date.getDay()] + ' ' + date.getDate() + ' ' + moisNoms[date.getMonth()] + ' a ' + times[count];
+      html += `<div class="booking-date-slot" data-date="${d}" data-label="${label}">
         <div class="slot-day">${days[date.getDay()]}</div>
         <div class="slot-num">${date.getDate()}</div>
         <div class="slot-time">${times[count]}</div>
@@ -3022,26 +3055,11 @@ function animateCounters(els) {
       slot.addEventListener('click', () => {
         dateGrid.querySelectorAll('.booking-date-slot').forEach(s => s.classList.remove('selected'));
         slot.classList.add('selected');
+        selectedSlotLabel = slot.dataset.label;
       });
     });
   }
   generateDates();
-
-  forfaitOptions.forEach(opt => {
-    opt.addEventListener('click', () => {
-      forfaitOptions.forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-      selectedForfait = opt.dataset.forfait;
-    });
-  });
-
-  function preselectForfait(name) {
-    if (!name) return;
-    forfaitOptions.forEach(o => {
-      o.classList.remove('selected');
-      if (o.dataset.forfait === name) { o.classList.add('selected'); selectedForfait = name; }
-    });
-  }
 
   function goToStep(n) {
     steps.forEach(s => s.classList.remove('active'));
@@ -3049,7 +3067,7 @@ function animateCounters(els) {
     if (n < steps.length) { steps[n].classList.add('active'); dots[n].classList.add('active'); }
     currentStep = n;
     backBtn.classList.toggle('hidden', n === 0);
-    nextBtn.querySelector('.cta-3d-text').textContent = n === 2 ? 'Confirmer' : 'Continuer';
+    nextBtn.querySelector('.cta-3d-text').textContent = n === 1 ? 'Confirmer' : 'Continuer';
   }
 
   // ---- FLIP MORPH OPEN ----
@@ -3161,14 +3179,14 @@ function animateCounters(els) {
     document.body.style.overflow = '';
   }
 
-  function openBooking(preselect) {
+  function openBooking() {
     if (isOpen) return;
     isOpen = true;
 
     goToStep(0);
     successEl.classList.remove('active');
     footer.style.display = '';
-    if (preselect) { preselectForfait(preselect); goToStep(1); }
+    selectedSlotLabel = '';
 
     const barIsVisible = bar.classList.contains('visible');
 
@@ -3196,7 +3214,7 @@ function animateCounters(els) {
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      openBooking(trigger.dataset.preselectForfait || null);
+      openBooking();
     });
   });
 
@@ -3206,17 +3224,33 @@ function animateCounters(els) {
   backBtn.addEventListener('click', () => { if (currentStep > 0) goToStep(currentStep - 1); });
   nextBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if (currentStep < 2) {
+    if (currentStep < 1) {
       goToStep(currentStep + 1);
     } else {
+      // Submit
       steps.forEach(s => s.classList.remove('active'));
       dots.forEach(d => { d.classList.add('done'); d.classList.remove('active'); });
       footer.style.display = 'none';
+      successDesc.textContent = selectedSlotLabel
+        ? 'Votre creneau du ' + selectedSlotLabel + ' est reserve. On vous recontacte sous 2h.'
+        : 'Nous vous recontactons sous 2h pour confirmer votre creneau.';
       successEl.classList.add('active');
-      setTimeout(closeBooking, 3500);
+      setTimeout(closeBooking, 4000);
     }
   });
 })();
+
+// FAQ accordions
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    // Toggle clicked
+    if (!wasOpen) item.classList.add('open');
+  });
+});
 
 </script>
 </body>
