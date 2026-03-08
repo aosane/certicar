@@ -96,7 +96,7 @@
   .navbar.scrolled {
     box-shadow: 0 1px 12px rgba(0,0,0,0.06);
   }
-  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-links { display: flex; align-items: center; gap: 4px; position: absolute; left: 50%; transform: translateX(-50%); }
   .nav-links a {
     font-size: 14px; font-weight: 500; color: var(--text-50);
     padding: 7px 14px; border-radius: var(--radius-pill); text-decoration: none;
@@ -114,11 +114,12 @@
     background: #4845c7;
     padding: 2px;
     box-shadow: 0 2px 8px rgba(89,85,239,0.12);
-    transition: all 0.2s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .cta-3d:hover {
-    box-shadow: 0 4px 14px rgba(89,85,239,0.2);
-    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(89,85,239,0.35), 0 2px 8px rgba(89,85,239,0.15);
+    transform: translateY(-2px);
   }
   .cta-3d-inner {
     display: flex; align-items: center;
@@ -134,12 +135,28 @@
     border-radius: 10px 10px 0 0;
     pointer-events: none;
   }
+  .cta-3d-inner::after {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+    transition: none;
+    pointer-events: none;
+  }
+  .cta-3d:hover .cta-3d-inner::after {
+    animation: ctaShimmer 0.6s ease-out forwards;
+  }
+  @keyframes ctaShimmer {
+    0% { left: -60%; }
+    100% { left: 120%; }
+  }
   .cta-3d-text {
     padding: 9px 18px;
     font-size: 13.5px; font-weight: 600;
     color: #fff; white-space: nowrap;
     position: relative; z-index: 1;
+    transition: letter-spacing 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  .cta-3d:hover .cta-3d-text { letter-spacing: 0.03em; }
   .cta-3d-icon {
     width: 32px; height: 32px;
     margin: 3px; margin-left: 0;
@@ -148,20 +165,40 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; position: relative; z-index: 1;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1), inset 0 1px 2px rgba(0,0,0,0.12);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s;
+  }
+  .cta-3d:hover .cta-3d-icon {
+    transform: scale(1.08);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15), inset 0 1px 2px rgba(0,0,0,0.12);
   }
   .cta-3d-circle {
     width: 22px; height: 22px;
     border-radius: 50%;
     background: #5955ef;
     display: flex; align-items: center; justify-content: center;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .cta-3d:hover .cta-3d-circle { background: #4441ba; }
+  .cta-3d:hover .cta-3d-circle {
+    background: #4441ba;
+    transform: scale(1.1);
+  }
+  .cta-3d-circle {
+    overflow: hidden;
+  }
   .cta-3d-circle svg {
     width: 11px; height: 11px; color: #fff;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .cta-3d:hover .cta-3d-circle svg { transform: translateX(2px); }
+  .cta-3d:hover .cta-3d-circle svg {
+    animation: arrowLoop 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes arrowLoop {
+    0% { transform: translateX(0); opacity: 1; }
+    35% { transform: translateX(14px); opacity: 0; }
+    36% { transform: translateX(-14px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
 
   /* ===== HERO ===== */
   .hero { width: 100%; padding: 22px 22px 0; }
@@ -251,14 +288,16 @@
     box-shadow:
       0 1px 0 0 rgba(0,0,0,0.06),
       0 4px 16px rgba(0,0,0,0.08);
-    transition: all 0.2s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                background 0.3s;
   }
   .cta-hero:hover {
-    transform: translateY(1px);
+    transform: translateY(-3px);
     box-shadow:
-      0 0 0 0 rgba(0,0,0,0.04),
-      0 2px 8px rgba(0,0,0,0.06);
-    background: rgba(255,255,255,0.2);
+      0 8px 32px rgba(0,0,0,0.12),
+      0 2px 8px rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.25);
   }
   .cta-hero-inner {
     display: flex; align-items: center;
@@ -268,13 +307,32 @@
     position: relative; overflow: hidden;
     box-shadow: inset 0 -1px 2px rgba(0,0,0,0.04);
   }
+  .cta-hero-inner::after {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(89,85,239,0.06), transparent);
+    pointer-events: none;
+  }
+  .cta-hero:hover .cta-hero-inner::after {
+    animation: heroShimmer 0.7s ease-out forwards;
+  }
+  @keyframes heroShimmer {
+    0% { left: -50%; }
+    100% { left: 120%; }
+  }
   .cta-hero-text {
     padding: 14px 28px;
+    font-family: 'Onest', sans-serif;
     font-size: 15px; font-weight: 700;
-    color: var(--text);
+    color: var(--purple-dark);
     white-space: nowrap;
     position: relative; z-index: 1;
     letter-spacing: -0.01em;
+    transition: color 0.3s, letter-spacing 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cta-hero:hover .cta-hero-text {
+    color: var(--purple);
+    letter-spacing: 0.02em;
   }
   .cta-hero-icon {
     width: 44px; height: 44px;
@@ -284,14 +342,31 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; position: relative; z-index: 1;
     box-shadow: 0 2px 6px rgba(89,85,239,0.3);
-    transition: background 0.3s;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background 0.3s,
+                box-shadow 0.3s;
   }
-  .cta-hero:hover .cta-hero-icon { background: var(--purple-dark); }
+  .cta-hero:hover .cta-hero-icon {
+    background: var(--purple-dark);
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(89,85,239,0.45);
+  }
   .cta-hero-icon svg {
     width: 16px; height: 16px; color: #fff;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .cta-hero:hover .cta-hero-icon svg { transform: translateX(2px); }
+  .cta-hero-icon {
+    overflow: hidden;
+  }
+  .cta-hero:hover .cta-hero-icon svg {
+    animation: heroArrowLoop 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes heroArrowLoop {
+    0% { transform: translateX(0); opacity: 1; }
+    35% { transform: translateX(18px); opacity: 0; }
+    36% { transform: translateX(-18px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
 
   /* Floating stamp */
   .hero-stamp {
@@ -340,17 +415,21 @@
     overflow: visible;
     z-index: 10;
     margin: 0;
-    margin: 16px 0;
-    padding: 0;
+    padding: 6px 0;
     pointer-events: none;
+    background: rgba(255, 255, 255, 0.85);
+    border-top: 1px solid var(--grey-border);
+    border-bottom: 1px solid var(--grey-border);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
   }
   .ticker {
-    background: var(--purple);
+    background: linear-gradient(135deg, #4a47c6, #5955ef);
     padding: 18px 0;
     white-space: nowrap;
     overflow: hidden;
-    transform: rotate(0deg) scale(1);
-    box-shadow: 0 2px 12px rgba(89, 85, 239, 0.25);
+    box-shadow:
+      0 4px 20px rgba(89, 85, 239, 0.25),
+      inset 0 1px 0 rgba(255,255,255,0.12);
     pointer-events: auto;
   }
   .ticker-inner {
@@ -363,7 +442,7 @@
   }
   .ticker-item {
     font-family: 'HafferSQ', sans-serif;
-    font-size: clamp(14px, 1.4vw, 17px); font-weight: 700;
+    font-size: clamp(12px, 1.1vw, 14px); font-weight: 700;
     color: #fff; text-transform: uppercase;
     letter-spacing: 0.06em;
     padding: 0 32px;
@@ -371,10 +450,11 @@
     display: flex; align-items: center; gap: 24px;
   }
   .ticker-item .sep {
-    width: 6px; height: 6px;
-    background: rgba(255,255,255,0.3);
+    width: 7px; height: 7px;
+    background: rgba(255,255,255,0.5);
     border-radius: 50%;
     flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(255,255,255,0.2);
   }
 
   /* ===== SECTION COMMONS ===== */
@@ -686,11 +766,12 @@
 
   @media (max-width: 900px) {
     .inspect-layout { grid-template-columns: 1fr; }
-    .inspect-video { min-height: 400px; }
+    .inspect-video { min-height: 240px; position: sticky; top: 72px; z-index: 5; }
     .inspect-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 560px) {
     .inspect-grid { grid-template-columns: 1fr; }
+    .inspect-video { min-height: 200px; }
   }
 
   /* ===== LOCATION SECTION ===== */
@@ -793,14 +874,25 @@
     display: flex; align-items: flex-end;
     height: 100%; padding: 24px;
   }
-  .step-row { display: flex; align-items: flex-end; gap: 16px; }
+  .step-content {
+    display: flex; flex-direction: row; align-items: flex-end; gap: 16px;
+  }
   .step-num-badge {
-    flex-shrink: 0; width: 48px; height: 48px;
-    border-radius: 50%; border: 2px solid rgba(255,255,255,0.3);
-    background: linear-gradient(to bottom, var(--purple-dark), var(--purple));
+    flex-shrink: 0;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    padding: 3px;
+    background: linear-gradient(to bottom, #4441ba, #5955ef);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.25rem; font-weight: 700; color: #fff;
-    box-shadow: 0 4px 16px rgba(89, 85, 239, 0.3);
+  }
+  .step-num-badge-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--purple);
   }
   .step-text h3 {
     font-family: 'Onest', sans-serif;
@@ -826,14 +918,15 @@
   /* Header row */
   .rapport-header-row {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: clamp(24px, 3vw, 36px);
   }
   .rapport-cta {
     display: inline-flex; align-items: center; gap: 8px;
-    background: var(--purple);
-    color: #fff;
+    background: transparent;
+    color: var(--purple);
+    border: 1.5px solid var(--purple);
     font-family: 'Onest', sans-serif;
     font-size: 0.875rem; font-weight: 600;
     padding: 12px 24px;
@@ -841,10 +934,10 @@
     text-decoration: none;
     transition: all 0.3s;
     flex-shrink: 0;
-    margin-top: 20px;
   }
   .rapport-cta:hover {
-    background: var(--purple-dark);
+    background: var(--purple);
+    color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(89,85,239,0.25);
   }
@@ -1501,6 +1594,7 @@
     .risk-stats { grid-template-columns: 1fr; }
     .risk-logos { gap: 12px; }
     .risk-logo-card { width: 60px; height: 60px; border-width: 3px; border-radius: 12px; }
+    .risk-logo-card img { filter: none; opacity: 1; }
     .risk-deco { display: none; }
   }
 
@@ -1578,16 +1672,22 @@
     position: absolute; bottom: 8%; left: 0; right: 0;
     display: flex; justify-content: center;
   }
-  .lastcta-phone .cta-btn a {
-    display: flex; align-items: center; justify-content: center;
-    background: var(--purple); color: #fff; border-radius: 9999px;
-    width: 314px; max-width: 100%; height: 50px;
-    font-weight: 700; font-family: 'Onest', sans-serif;
-    text-decoration: none;
-    box-shadow: 0 2px 21px rgba(0,0,0,0.08), 0 2px 32px rgba(89,85,239,0.42);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  .lastcta-phone .cta-btn .cta-3d {
+    transform: scale(1.15);
   }
-  .lastcta-phone .cta-btn a:hover { transform: scale(1.04); }
+  .lastcta-phone .cta-btn .cta-3d-text {
+    padding: 11px 22px;
+    font-size: 14px;
+  }
+  .lastcta-phone .cta-btn .cta-3d-icon {
+    width: 36px; height: 36px;
+  }
+  .lastcta-phone .cta-btn .cta-3d-circle {
+    width: 26px; height: 26px;
+  }
+  .lastcta-phone .cta-btn .cta-3d-circle svg {
+    width: 13px; height: 13px;
+  }
 
   /* ===== FOOTER ===== */
   .footer {
@@ -1654,6 +1754,171 @@
   .fb-whatsapp svg { color: #25D366; transition: color 0.3s; }
   .fb-whatsapp:hover svg { color: #fff; }
 
+  /* ===== BOOKING MODAL ===== */
+  .booking-backdrop {
+    position: fixed; inset: 0; z-index: 150;
+    background: rgba(0,0,0,0); pointer-events: none;
+    transition: background 0.5s ease;
+  }
+  .booking-backdrop.active { background: rgba(0,0,0,0.45); pointer-events: all; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+
+  /* The floating bar morphs via inline styles set by JS (FLIP technique) */
+  .floating-bar {
+    will-change: width, height, bottom, border-radius, box-shadow;
+  }
+  .floating-bar.morphing {
+    z-index: 200;
+    pointer-events: none;
+    transition:
+      width 0.55s cubic-bezier(0.32, 0.72, 0, 1),
+      height 0.55s cubic-bezier(0.32, 0.72, 0, 1),
+      bottom 0.55s cubic-bezier(0.32, 0.72, 0, 1),
+      border-radius 0.4s cubic-bezier(0.32, 0.72, 0, 1),
+      box-shadow 0.5s ease,
+      padding 0.55s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .floating-bar.morphing > .cta-3d,
+  .floating-bar.morphing > .fb-whatsapp {
+    transition: opacity 0.15s ease;
+    opacity: 0;
+  }
+  .floating-bar.expanded {
+    z-index: 200;
+    pointer-events: auto;
+    overflow: hidden;
+  }
+  .floating-bar.expanded > .cta-3d,
+  .floating-bar.expanded > .fb-whatsapp {
+    position: absolute; opacity: 0; pointer-events: none; height: 0; overflow: hidden;
+  }
+
+  .floating-bar.force-visible {
+    transform: translateX(-50%) translateY(0) !important;
+    opacity: 1 !important;
+  }
+
+  /* Shrink-back morph */
+  .floating-bar.morphing-out {
+    z-index: 200;
+    pointer-events: none;
+    transition:
+      width 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+      height 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+      bottom 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+      border-radius 0.35s cubic-bezier(0.32, 0.72, 0, 1),
+      box-shadow 0.4s ease,
+      padding 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .floating-bar.morphing-out > .cta-3d,
+  .floating-bar.morphing-out > .fb-whatsapp {
+    transition: opacity 0.25s 0.3s ease;
+    opacity: 1;
+  }
+
+  /* Modal content */
+  .booking-modal {
+    display: flex; flex-direction: column; width: 100%;
+    opacity: 0; pointer-events: none;
+    position: absolute; top: 0; left: 0; right: 0;
+  }
+  .floating-bar.expanded .booking-modal {
+    opacity: 1; pointer-events: auto; position: relative;
+    animation: bookingContentIn 0.4s 0.35s both;
+  }
+  @keyframes bookingContentIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .booking-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--grey-border-light); }
+  .booking-header-left { display: flex; flex-direction: column; gap: 2px; }
+  .booking-title { font-size: 18px; font-weight: 700; color: var(--text); }
+  .booking-subtitle { font-size: 13px; color: var(--text-50); }
+  .booking-close {
+    width: 36px; height: 36px; border-radius: 10px;
+    border: 1px solid var(--grey-border); background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s; color: var(--text-50); flex-shrink: 0;
+  }
+  .booking-close:hover { background: var(--grey-bg); color: var(--text); }
+  .booking-close svg { width: 16px; height: 16px; }
+  .booking-steps { display: flex; align-items: center; gap: 6px; padding: 16px 24px 0; }
+  .booking-step-dot { height: 3px; flex: 1; border-radius: 3px; background: var(--grey-border); transition: background 0.4s; }
+  .booking-step-dot.active, .booking-step-dot.done { background: var(--purple); }
+  .booking-body { padding: 20px 24px 24px; position: relative; min-height: 280px; }
+  .booking-step { display: none; flex-direction: column; gap: 12px; animation: stepIn 0.3s both; }
+  .booking-step.active { display: flex; }
+  @keyframes stepIn { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
+  .booking-step-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .forfait-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .forfait-option {
+    display: flex; flex-direction: column; padding: 14px 16px; border-radius: 14px;
+    border: 1.5px solid var(--grey-border); background: #fff; cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16,1,0.3,1); position: relative;
+  }
+  .forfait-option:hover { border-color: rgba(89,85,239,0.3); background: var(--purple-glow); }
+  .forfait-option.selected { border-color: var(--purple); background: var(--purple-glow); box-shadow: 0 0 0 3px rgba(89,85,239,0.1); }
+  .forfait-option .forfait-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .forfait-option .forfait-desc { font-size: 12px; color: var(--text-50); margin-top: 2px; }
+  .forfait-option .forfait-price { font-size: 18px; font-weight: 800; color: var(--purple); margin-top: 8px; }
+  .forfait-check {
+    position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--purple); color: #fff; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(0.5); transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .forfait-option.selected .forfait-check { opacity: 1; transform: scale(1); }
+  .forfait-check svg { width: 12px; height: 12px; }
+  .booking-field { display: flex; flex-direction: column; gap: 5px; }
+  .booking-field label { font-size: 12px; font-weight: 600; color: var(--text-50); text-transform: uppercase; letter-spacing: 0.5px; }
+  .booking-field input, .booking-field select {
+    height: 44px; padding: 0 14px; border-radius: 10px; border: 1.5px solid var(--grey-border);
+    font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text); background: #fff; outline: none; transition: border-color 0.2s;
+  }
+  .booking-field input:focus, .booking-field select:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(89,85,239,0.08); }
+  .booking-field input::placeholder { color: var(--text-30); }
+  .booking-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .booking-date-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .booking-date-slot {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 10px 4px; border-radius: 10px; border: 1.5px solid var(--grey-border);
+    cursor: pointer; transition: all 0.2s; background: #fff;
+  }
+  .booking-date-slot:hover { border-color: rgba(89,85,239,0.3); }
+  .booking-date-slot.selected { border-color: var(--purple); background: var(--purple-glow); }
+  .booking-date-slot .slot-day { font-size: 11px; font-weight: 600; color: var(--text-50); text-transform: uppercase; }
+  .booking-date-slot .slot-num { font-size: 18px; font-weight: 800; color: var(--text); line-height: 1.2; }
+  .booking-date-slot .slot-time { font-size: 11px; color: var(--text-50); margin-top: 2px; }
+  .booking-date-slot.selected .slot-day,
+  .booking-date-slot.selected .slot-num,
+  .booking-date-slot.selected .slot-time { color: var(--purple); }
+  .booking-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 24px 20px; border-top: 1px solid var(--grey-border-light);
+  }
+  .booking-back {
+    display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600;
+    color: var(--text-50); background: none; border: none; cursor: pointer;
+    padding: 8px 0; transition: color 0.2s; font-family: inherit;
+  }
+  .booking-back:hover { color: var(--text); }
+  .booking-back svg { width: 16px; height: 16px; }
+  .booking-back.hidden { opacity: 0; pointer-events: none; }
+  .booking-next { margin-left: auto; }
+  .booking-success {
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 40px 24px; gap: 12px; min-height: 320px;
+  }
+  .booking-success.active { display: flex; animation: stepIn 0.4s both; }
+  .booking-success-icon {
+    width: 56px; height: 56px; border-radius: 50%; background: #E8FFF3; color: #00C878;
+    display: flex; align-items: center; justify-content: center;
+    animation: successPop 0.5s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes successPop { from { transform: scale(0); } to { transform: scale(1); } }
+  .booking-success-icon svg { width: 28px; height: 28px; }
+  .booking-success-title { font-size: 20px; font-weight: 800; color: var(--text); }
+  .booking-success-desc { font-size: 14px; color: var(--text-50); max-width: 300px; line-height: 1.5; }
+
   /* ===== SCROLL REVEAL ===== */
   .reveal {
     opacity: 0; transform: translateY(30px);
@@ -1665,10 +1930,12 @@
   @media (max-width: 900px) {
     .nav-links { display: none; }
     .hero-stamp { display: none; }
+    .hero h1 .text-outline { -webkit-text-stroke: 0.8px rgba(255,255,255,0.6); }
     .location-card { grid-template-columns: 1fr; }
     .loc-map-side { min-height: 250px; }
     .loc-map-side { padding: 0 16px 16px; }
     .steps-grid { grid-template-columns: 1fr; }
+    .step-card { height: 280px; }
     .rapport-content { grid-template-columns: 1fr; }
     .rapport-visual { min-height: 380px; }
     .rapport-header-row { flex-direction: column; gap: 16px; }
@@ -1700,11 +1967,12 @@
     <img src="./assets/images/certicar-logo.svg" alt="Certicar" />
   </div>
   <div class="nav-links">
-    <a href="#section-steps">Comment ca marche ?</a>
-    <a href="#section-rapport">Rapport d'inspection</a>
+    <a href="#section-inspect">Inspection</a>
+    <a href="#section-steps">Comment ca marche</a>
     <a href="#section-pricing">Tarifs</a>
+    <a href="#section-testimonials">Avis clients</a>
   </div>
-  <a href="#section-pricing" class="cta-3d">
+  <a href="#" class="cta-3d" data-booking-trigger>
     <div class="cta-3d-inner">
       <span class="cta-3d-text">Prendre RDV</span>
       <div class="cta-3d-icon"><div class="cta-3d-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
@@ -1747,7 +2015,7 @@
       <div class="hero-cta-wrap">
         <a href="#section-pricing" class="cta-hero">
           <div class="cta-hero-inner">
-            <span class="cta-hero-text">Demander une inspection</span>
+            <span class="cta-hero-text">Prendre rendez-vous</span>
             <div class="cta-hero-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
           </div>
         </a>
@@ -1790,7 +2058,7 @@
     </div>
 
     <div class="risk-quote">
-      <blockquote>"Belle annonce, bon prix, vendeur sympa — mais <span class="q-purple">qu'est-ce qui se cache sous le capot ?</span>"</blockquote>
+      <blockquote>"Belle annonce, bon prix<br>mais <span class="q-purple">qu'est-ce qui se cache<br>sous le capot ?</span>"</blockquote>
       <a href="#section-pricing" class="risk-quote-link">
         Prendre RDV
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -1809,10 +2077,10 @@
         </div>
       </div>
       <div class="risk-stat-card">
-        <div class="risk-stat-val"><span class="counter-num" data-target="2.3" data-decimals="1" data-duration="2000">0</span><span class="unit">M€</span></div>
+        <div class="risk-stat-val"><span class="counter-num" data-target="1150" data-duration="2000">0</span><span class="unit">€</span></div>
         <div class="risk-stat-desc">
-          <span class="muted">economises par nos clients</span><br>
-          <span class="bold">en reparations evitees</span>
+          <span class="muted">de reparations evitees</span><br>
+          <span class="bold">en moyenne par client</span>
         </div>
       </div>
       <div class="risk-stat-card">
@@ -1847,22 +2115,6 @@
           <img class="sticker-img" data-sticker="4" src="./assets/stickers/interieur.png" alt="Interieur" />
           <img class="sticker-img" data-sticker="5" src="./assets/stickers/administratif.png" alt="Administratif" />
         </div>
-        <!-- HUD Diagnostic effect -->
-        <div class="scan-hud4b">
-          <div class="hud4b-overlay">
-            <div class="hud4b-sweep"></div>
-          </div>
-          <div class="hud4b-metrics">
-            <div class="hud4b-metric"><div class="hud4b-metric-bar"><div class="hud4b-metric-fill"></div></div><div class="hud4b-metric-label">Fiabilite</div></div>
-            <div class="hud4b-metric"><div class="hud4b-metric-bar"><div class="hud4b-metric-fill"></div></div><div class="hud4b-metric-label">Securite</div></div>
-            <div class="hud4b-metric"><div class="hud4b-metric-bar"><div class="hud4b-metric-fill"></div></div><div class="hud4b-metric-label">Conformite</div></div>
-          </div>
-          <div class="hud4b-score">
-            <div class="hud4b-score-num">A</div>
-            <div class="hud4b-score-label">Score global</div>
-          </div>
-        </div>
-        <div class="scan-verdict"></div>
       </div>
 
       <!-- Grille 2x3 -->
@@ -2044,12 +2296,10 @@
         <div class="step-gradient"></div>
         <div class="step-num">01</div>
         <div class="step-content">
-          <div class="step-row">
-            <div class="step-num-badge">1</div>
-            <div class="step-text">
-              <h3>Venez avec ou sans RDV</h3>
-              <p>Reservez votre creneau en ligne ou passez directement.</p>
-            </div>
+          <div class="step-num-badge"><div class="step-num-badge-inner">1</div></div>
+          <div class="step-text">
+            <h3>Venez avec ou sans RDV</h3>
+            <p>Reservez votre creneau en ligne ou passez directement.</p>
           </div>
         </div>
       </div>
@@ -2058,12 +2308,10 @@
         <div class="step-gradient"></div>
         <div class="step-num">02</div>
         <div class="step-content">
-          <div class="step-row">
-            <div class="step-num-badge">2</div>
-            <div class="step-text">
-              <h3>Attendez l'inspection</h3>
-              <p>L'inspection dure environ 1h a 1h30, selon le vehicule.</p>
-            </div>
+          <div class="step-num-badge"><div class="step-num-badge-inner">2</div></div>
+          <div class="step-text">
+            <h3>Attendez l'inspection</h3>
+            <p>L'inspection dure environ 1h a 1h30, selon le vehicule.</p>
           </div>
         </div>
       </div>
@@ -2072,12 +2320,10 @@
         <div class="step-gradient"></div>
         <div class="step-num">03</div>
         <div class="step-content">
-          <div class="step-row">
-            <div class="step-num-badge">3</div>
-            <div class="step-text">
-              <h3>Recevez votre rapport</h3>
-              <p>Rapport complet, illustre et explique par nos experts.</p>
-            </div>
+          <div class="step-num-badge"><div class="step-num-badge-inner">3</div></div>
+          <div class="step-text">
+            <h3>Recevez votre rapport</h3>
+            <p>Rapport complet, illustre et explique par nos experts.</p>
           </div>
         </div>
       </div>
@@ -2128,7 +2374,7 @@
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>VW Polo</li>
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Citroen C3</li>
         </ul>
-        <a href="#" class="pricing-btn pricing-btn-featured">Prendre rendez-vous</a>
+        <a href="#" class="pricing-btn pricing-btn-featured" data-booking-trigger data-preselect-forfait="citadine">Prendre rendez-vous</a>
       </div>
       <div class="pricing-card">
         <div class="card-label">BERLINE</div>
@@ -2142,7 +2388,7 @@
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>BMW Serie 3</li>
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Peugeot 508</li>
         </ul>
-        <a href="#" class="pricing-btn pricing-btn-default">Prendre rendez-vous</a>
+        <a href="#" class="pricing-btn pricing-btn-default" data-booking-trigger data-preselect-forfait="berline">Prendre rendez-vous</a>
       </div>
       <div class="pricing-card">
         <div class="card-label">SUV</div>
@@ -2156,7 +2402,7 @@
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Mercedes GLC</li>
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>BMW X3</li>
         </ul>
-        <a href="#" class="pricing-btn pricing-btn-default">Prendre rendez-vous</a>
+        <a href="#" class="pricing-btn pricing-btn-default" data-booking-trigger data-preselect-forfait="suv">Prendre rendez-vous</a>
       </div>
       <div class="pricing-card">
         <div class="card-label">PREMIUM</div>
@@ -2170,7 +2416,7 @@
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Mercedes AMG</li>
           <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span>Audi RS</li>
         </ul>
-        <a href="#" class="pricing-btn pricing-btn-default">Prendre rendez-vous</a>
+        <a href="#" class="pricing-btn pricing-btn-default" data-booking-trigger data-preselect-forfait="premium">Prendre rendez-vous</a>
       </div>
     </div>
   </div>
@@ -2284,7 +2530,14 @@ Inspection ultra pro, rapport clair et complet."</p>
     <div class="lastcta-phone">
       <img src="./assets/images/phone-location.avif" alt="" />
       <img class="rdv-overlay" src="./assets/images/rdv-footer.png" alt="" />
-      <div class="cta-btn"><a href="#section-pricing">Demander une inspection</a></div>
+      <div class="cta-btn">
+        <a href="#" class="cta-3d" data-booking-trigger>
+          <div class="cta-3d-inner">
+            <span class="cta-3d-text">Demander une inspection</span>
+            <div class="cta-3d-icon"><div class="cta-3d-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -2302,9 +2555,12 @@ Inspection ultra pro, rapport clair et complet."</p>
   </div>
 </footer>
 
+<!-- BOOKING BACKDROP -->
+<div class="booking-backdrop" id="bookingBackdrop"></div>
+
 <!-- FLOATING BAR -->
 <div class="floating-bar" id="floatingBar">
-  <a href="#section-pricing" class="cta-3d">
+  <a href="#" class="cta-3d" data-booking-trigger>
     <div class="cta-3d-inner">
       <span class="cta-3d-text">Prendre RDV</span>
       <div class="cta-3d-icon"><div class="cta-3d-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
@@ -2314,30 +2570,137 @@ Inspection ultra pro, rapport clair et complet."</p>
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     WhatsApp
   </a>
+
+  <!-- Booking modal (hidden, revealed on expand) -->
+  <div class="booking-modal">
+    <div class="booking-header">
+      <div class="booking-header-left">
+        <div class="booking-title">Prendre rendez-vous</div>
+        <div class="booking-subtitle">Inspection en 48h, rapport sous 24h</div>
+      </div>
+      <button class="booking-close" id="bookingClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="booking-steps">
+      <div class="booking-step-dot active" data-step="0"></div>
+      <div class="booking-step-dot" data-step="1"></div>
+      <div class="booking-step-dot" data-step="2"></div>
+    </div>
+
+    <div class="booking-body">
+      <!-- Step 1: Forfait -->
+      <div class="booking-step active" data-booking-step="0">
+        <div class="booking-step-title">Choisissez votre forfait</div>
+        <div class="forfait-grid">
+          <div class="forfait-option" data-forfait="citadine" data-price="150">
+            <div class="forfait-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+            <div class="forfait-name">Citadine</div>
+            <div class="forfait-desc">Clio, 208, Polo, C3...</div>
+            <div class="forfait-price">150&euro;</div>
+          </div>
+          <div class="forfait-option" data-forfait="berline" data-price="200">
+            <div class="forfait-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+            <div class="forfait-name">Berline</div>
+            <div class="forfait-desc">A4, Model 3, Serie 3...</div>
+            <div class="forfait-price">200&euro;</div>
+          </div>
+          <div class="forfait-option" data-forfait="suv" data-price="250">
+            <div class="forfait-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+            <div class="forfait-name">SUV</div>
+            <div class="forfait-desc">3008, Tiguan, GLC...</div>
+            <div class="forfait-price">250&euro;</div>
+          </div>
+          <div class="forfait-option" data-forfait="premium" data-price="400">
+            <div class="forfait-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
+            <div class="forfait-name">Premium</div>
+            <div class="forfait-desc">911, M3, AMG, RS...</div>
+            <div class="forfait-price">400&euro;</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Vehicle -->
+      <div class="booking-step" data-booking-step="1">
+        <div class="booking-step-title">Informations du vehicule</div>
+        <div class="booking-field">
+          <label>Plaque d'immatriculation</label>
+          <input type="text" placeholder="AA-123-BB" id="bookingPlate" style="text-transform: uppercase; letter-spacing: 2px; font-weight: 700;" />
+        </div>
+        <div class="booking-row">
+          <div class="booking-field">
+            <label>Marque</label>
+            <input type="text" placeholder="Peugeot" id="bookingBrand" />
+          </div>
+          <div class="booking-field">
+            <label>Modele</label>
+            <input type="text" placeholder="3008" id="bookingModel" />
+          </div>
+        </div>
+        <div class="booking-row">
+          <div class="booking-field">
+            <label>Annee</label>
+            <input type="text" placeholder="2021" id="bookingYear" />
+          </div>
+          <div class="booking-field">
+            <label>Kilometrage</label>
+            <input type="text" placeholder="45 000 km" id="bookingKm" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Date + Contact -->
+      <div class="booking-step" data-booking-step="2">
+        <div class="booking-step-title">Date et coordonnees</div>
+        <div class="booking-date-grid" id="bookingDates"></div>
+        <div class="booking-row" style="margin-top: 4px;">
+          <div class="booking-field">
+            <label>Prenom</label>
+            <input type="text" placeholder="Mehdi" id="bookingFirstname" />
+          </div>
+          <div class="booking-field">
+            <label>Telephone</label>
+            <input type="tel" placeholder="06 12 34 56 78" id="bookingPhone" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Success -->
+      <div class="booking-success" id="bookingSuccess">
+        <div class="booking-success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+        </div>
+        <div class="booking-success-title">Rendez-vous confirme !</div>
+        <div class="booking-success-desc">Nous vous recontactons sous 2h pour finaliser votre creneau. Merci de votre confiance.</div>
+      </div>
+    </div>
+
+    <div class="booking-footer" id="bookingFooter">
+      <button class="booking-back hidden" id="bookingBack">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Retour
+      </button>
+      <div class="booking-next">
+        <a href="#" class="cta-3d" id="bookingNext">
+          <div class="cta-3d-inner">
+            <span class="cta-3d-text">Continuer</span>
+            <div class="cta-3d-icon"><div class="cta-3d-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-// Sticker showcase — click to switch, auto-cycle, HUD diagnostic
+// Sticker showcase — click to switch, auto-cycle (stickers only)
 (function() {
   const CYCLE_MS = 5000;
 
   const cards = document.querySelectorAll('.inspect-card[data-inspect]');
   const stickers = document.querySelectorAll('.sticker-img[data-sticker]');
-  const verdictEl = document.querySelector('.scan-verdict');
-  const hudEl = document.querySelector('.scan-hud4b');
   if (!cards.length || !stickers.length) return;
-
-  const verdicts = [
-    { status: 'ok', text: 'Moteur conforme' },
-    { status: 'ok', text: 'Freinage optimal' },
-    { status: 'warning', text: '1 code defaut detecte' },
-    { status: 'ok', text: 'Carrosserie intacte' },
-    { status: 'ok', text: 'Interieur bon etat' },
-    { status: 'warning', text: 'CT expire dans 2 mois' },
-  ];
-
-  const checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
-  const warnSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>';
 
   // Add progress elements to cards
   cards.forEach(card => {
@@ -2351,27 +2714,15 @@ Inspection ultra pro, rapport clair et complet."</p>
 
   let current = 0;
   let autoTimeout = null;
-  let verdictTimeout, hudTimeout;
-
-  function clearTimers() {
-    clearTimeout(autoTimeout);
-    clearTimeout(verdictTimeout);
-    clearTimeout(hudTimeout);
-  }
 
   function activateCard(index) {
     if (index === current && stickers[index].classList.contains('active')) return;
 
-    // Mark current as checked, then deactivate
     cards[current].classList.add('checked');
     cards[current].classList.remove('active');
     stickers[current].classList.remove('active');
     stickers[current].classList.add('exit-up');
-    verdictEl.classList.remove('show');
-    hudEl.classList.remove('active');
-    void hudEl.offsetWidth;
 
-    // Reset progress elements on previous card
     const prevCircle = cards[current].querySelector('.progress-circle-fill');
     if (prevCircle) { prevCircle.style.animation = 'none'; void prevCircle.offsetWidth; }
 
@@ -2384,28 +2735,14 @@ Inspection ultra pro, rapport clair et complet."</p>
       stickers[current].classList.add('active');
       cards[current].classList.add('active');
 
-      // Reset and start circle timer
       const circle = cards[current].querySelector('.progress-circle-fill');
       if (circle) { circle.style.animation = 'none'; void circle.offsetWidth; circle.style.animation = ''; }
-      // HUD effect appears with sticker
-      hudTimeout = setTimeout(() => {
-        hudEl.classList.add('active');
-      }, 300);
-
-      // Verdict appears after HUD metrics
-      verdictTimeout = setTimeout(() => {
-        const v = verdicts[current];
-        verdictEl.className = 'scan-verdict ' + v.status;
-        verdictEl.innerHTML = (v.status === 'ok' ? checkSvg : warnSvg) + v.text;
-        requestAnimationFrame(() => verdictEl.classList.add('show'));
-      }, 1400);
     }, 200);
   }
 
-  // Click to switch (not hover)
   cards.forEach((card, i) => {
     card.addEventListener('click', () => {
-      clearTimers();
+      clearTimeout(autoTimeout);
       activateCard(i);
       scheduleNext();
     });
@@ -2420,19 +2757,31 @@ Inspection ultra pro, rapport clair et complet."</p>
     }, CYCLE_MS);
   }
 
-  // Start when visible
+  const isMobile = () => window.innerWidth <= 900;
+
+  // Mobile: scroll-driven activation
+  if (isMobile()) {
+    const scrollObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const i = parseInt(e.target.dataset.inspect);
+          if (i !== current) {
+            clearTimeout(autoTimeout);
+            activateCard(i);
+          }
+        }
+      });
+    }, { threshold: 0.6, rootMargin: '-30% 0px -30% 0px' });
+
+    cards.forEach(card => scrollObs.observe(card));
+  }
+
+  // Desktop: auto-cycle when visible
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        hudEl.classList.add('active');
+      if (e.isIntersecting && !isMobile()) {
         const circle = cards[0].querySelector('.progress-circle-fill');
         if (circle) { circle.style.animation = 'none'; void circle.offsetWidth; circle.style.animation = ''; }
-        verdictTimeout = setTimeout(() => {
-          const v = verdicts[0];
-          verdictEl.className = 'scan-verdict ' + v.status;
-          verdictEl.innerHTML = (v.status === 'ok' ? checkSvg : warnSvg) + v.text;
-          requestAnimationFrame(() => verdictEl.classList.add('show'));
-        }, 1400);
         scheduleNext();
         obs.disconnect();
       }
@@ -2629,6 +2978,245 @@ function animateCounters(els) {
     pricingCards.forEach(c => c.classList.remove('ai-highlight'));
   });
 }
+
+// ===== BOOKING MODAL (FLIP morph) =====
+(function() {
+  const bar = document.getElementById('floatingBar');
+  const backdrop = document.getElementById('bookingBackdrop');
+  const closeBtn = document.getElementById('bookingClose');
+  const backBtn = document.getElementById('bookingBack');
+  const nextBtn = document.getElementById('bookingNext');
+  const footer = document.getElementById('bookingFooter');
+  const successEl = document.getElementById('bookingSuccess');
+  const heroSection = document.getElementById('section-header');
+
+  const steps = document.querySelectorAll('.booking-step');
+  const dots = document.querySelectorAll('.booking-step-dot');
+  const forfaitOptions = document.querySelectorAll('.forfait-option');
+  const dateGrid = document.getElementById('bookingDates');
+
+  let currentStep = 0;
+  let selectedForfait = null;
+  let isOpen = false;
+  let savedBarRect = null;
+
+  const MORPH_MS = 550;
+  const EASING = 'cubic-bezier(0.32, 0.72, 0, 1)';
+
+  function generateDates() {
+    const days = ['DIM','LUN','MAR','MER','JEU','VEN','SAM'];
+    const times = ['9h00','10h30','14h00','16h00','9h30','11h00','14h30','15h00'];
+    let html = ''; const now = new Date(); let count = 0;
+    for (let d = 2; count < 8; d++) {
+      const date = new Date(now); date.setDate(date.getDate() + d);
+      if (date.getDay() === 0) continue;
+      html += `<div class="booking-date-slot" data-date="${d}">
+        <div class="slot-day">${days[date.getDay()]}</div>
+        <div class="slot-num">${date.getDate()}</div>
+        <div class="slot-time">${times[count]}</div>
+      </div>`;
+      count++;
+    }
+    dateGrid.innerHTML = html;
+    dateGrid.querySelectorAll('.booking-date-slot').forEach(slot => {
+      slot.addEventListener('click', () => {
+        dateGrid.querySelectorAll('.booking-date-slot').forEach(s => s.classList.remove('selected'));
+        slot.classList.add('selected');
+      });
+    });
+  }
+  generateDates();
+
+  forfaitOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+      forfaitOptions.forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      selectedForfait = opt.dataset.forfait;
+    });
+  });
+
+  function preselectForfait(name) {
+    if (!name) return;
+    forfaitOptions.forEach(o => {
+      o.classList.remove('selected');
+      if (o.dataset.forfait === name) { o.classList.add('selected'); selectedForfait = name; }
+    });
+  }
+
+  function goToStep(n) {
+    steps.forEach(s => s.classList.remove('active'));
+    dots.forEach((d, i) => { d.classList.remove('active'); d.classList.toggle('done', i < n); });
+    if (n < steps.length) { steps[n].classList.add('active'); dots[n].classList.add('active'); }
+    currentStep = n;
+    backBtn.classList.toggle('hidden', n === 0);
+    nextBtn.querySelector('.cta-3d-text').textContent = n === 2 ? 'Confirmer' : 'Continuer';
+  }
+
+  // ---- FLIP MORPH OPEN ----
+  function morphOpen() {
+    // FIRST: capture bar position
+    const rect = bar.getBoundingClientRect();
+    savedBarRect = {
+      w: rect.width, h: rect.height,
+      bottom: window.innerHeight - rect.bottom,
+      br: 18, pad: 6
+    };
+
+    // Pin bar at current size (no transition yet)
+    bar.style.transition = 'none';
+    bar.style.width = rect.width + 'px';
+    bar.style.height = rect.height + 'px';
+    bar.style.bottom = savedBarRect.bottom + 'px';
+    bar.style.left = '50%';
+    bar.style.transform = 'translateX(-50%)';
+    bar.style.borderRadius = '18px';
+    bar.style.padding = '6px';
+    bar.classList.add('morphing');
+    void bar.offsetWidth; // force reflow
+
+    // LAST: calculate target modal position
+    const modalW = Math.min(520, window.innerWidth - 32);
+    const modalH = Math.min(540, window.innerHeight - 48);
+    const targetBottom = (window.innerHeight - modalH) / 2;
+
+    // PLAY: animate to modal
+    const t = `width ${MORPH_MS}ms ${EASING}, height ${MORPH_MS}ms ${EASING}, bottom ${MORPH_MS}ms ${EASING}, border-radius ${MORPH_MS * 0.7}ms ${EASING}, padding ${MORPH_MS}ms ${EASING}, box-shadow ${MORPH_MS}ms ease`;
+    bar.style.transition = t;
+
+    requestAnimationFrame(() => {
+      bar.style.width = modalW + 'px';
+      bar.style.height = modalH + 'px';
+      bar.style.bottom = targetBottom + 'px';
+      bar.style.borderRadius = '22px';
+      bar.style.padding = '0px';
+      bar.style.boxShadow = '0 24px 80px rgba(0,0,0,0.22), 0 8px 24px rgba(0,0,0,0.12)';
+    });
+
+    backdrop.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // After morph, switch to expanded state
+    setTimeout(() => {
+      bar.classList.remove('morphing');
+      bar.classList.add('expanded');
+      bar.style.transition = '';
+      bar.style.width = modalW + 'px';
+      bar.style.height = 'auto';
+      bar.style.minHeight = modalH + 'px';
+      bar.style.bottom = targetBottom + 'px';
+    }, MORPH_MS + 30);
+  }
+
+  // ---- FLIP MORPH CLOSE ----
+  function morphClose() {
+    if (!savedBarRect) { forceClose(); return; }
+
+    // Grab current expanded rect
+    const rect = bar.getBoundingClientRect();
+
+    // Remove expanded, pin at current size
+    bar.classList.remove('expanded');
+    bar.style.transition = 'none';
+    bar.style.width = rect.width + 'px';
+    bar.style.height = rect.height + 'px';
+    bar.style.bottom = (window.innerHeight - rect.bottom) + 'px';
+    bar.style.minHeight = '';
+    bar.style.borderRadius = '22px';
+    bar.style.padding = '0px';
+    bar.classList.add('morphing-out');
+    void bar.offsetWidth;
+
+    // Animate back to pill
+    const ms = MORPH_MS * 0.85;
+    const t = `width ${ms}ms ${EASING}, height ${ms}ms ${EASING}, bottom ${ms}ms ${EASING}, border-radius ${ms * 0.7}ms ${EASING}, padding ${ms}ms ${EASING}, box-shadow ${ms}ms ease`;
+    bar.style.transition = t;
+
+    requestAnimationFrame(() => {
+      bar.style.width = savedBarRect.w + 'px';
+      bar.style.height = savedBarRect.h + 'px';
+      bar.style.bottom = savedBarRect.bottom + 'px';
+      bar.style.borderRadius = '18px';
+      bar.style.padding = '6px';
+      bar.style.boxShadow = '0 8px 40px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.05)';
+    });
+
+    backdrop.classList.remove('active');
+
+    setTimeout(() => {
+      bar.classList.remove('morphing-out');
+      bar.style.cssText = '';
+      document.body.style.overflow = '';
+
+      const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+      if (window.scrollY <= heroBottom - 200) {
+        bar.classList.remove('visible', 'force-visible');
+      }
+    }, ms + 30);
+  }
+
+  function forceClose() {
+    bar.classList.remove('expanded', 'morphing', 'morphing-out');
+    bar.style.cssText = '';
+    backdrop.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function openBooking(preselect) {
+    if (isOpen) return;
+    isOpen = true;
+
+    goToStep(0);
+    successEl.classList.remove('active');
+    footer.style.display = '';
+    if (preselect) { preselectForfait(preselect); goToStep(1); }
+
+    const barIsVisible = bar.classList.contains('visible');
+
+    if (!barIsVisible) {
+      // Slide bar up first, then morph
+      bar.classList.add('force-visible', 'visible');
+      void bar.offsetWidth;
+      setTimeout(() => {
+        bar.classList.remove('force-visible');
+        morphOpen();
+      }, 500);
+    } else {
+      morphOpen();
+    }
+  }
+
+  function closeBooking() {
+    if (!isOpen) return;
+    isOpen = false;
+    morphClose();
+  }
+
+  // All triggers
+  document.querySelectorAll('[data-booking-trigger]').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openBooking(trigger.dataset.preselectForfait || null);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeBooking);
+  backdrop.addEventListener('click', closeBooking);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBooking(); });
+  backBtn.addEventListener('click', () => { if (currentStep > 0) goToStep(currentStep - 1); });
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (currentStep < 2) {
+      goToStep(currentStep + 1);
+    } else {
+      steps.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => { d.classList.add('done'); d.classList.remove('active'); });
+      footer.style.display = 'none';
+      successEl.classList.add('active');
+      setTimeout(closeBooking, 3500);
+    }
+  });
+})();
 
 </script>
 </body>
