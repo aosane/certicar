@@ -1,0 +1,34 @@
+# Certicar
+
+> Centre d'inspection automobile avant achat en Ile-de-France. Nous inspectons les vehicules d'occasion pour proteger les acheteurs contre les vices caches, les compteurs trafiques et les problemes mecaniques non visibles.
+
+## Services
+
+Certicar propose une inspection complete couvrant 400+ points de controle sur 6 axes : moteur et transmission, chassis et securite, electronique et diagnostic OBD, carrosserie et peinture (mesure d'epaisseur), habitacle et fonctions, administratif et historique. Chaque inspection dure 45 minutes a 1 heure et produit un rapport detaille avec un score de fiabilite (note A a E, score sur 100) accompagne de 25+ photos HD.
+
+## Tarifs
+
+- Citadine (Renault Clio, Peugeot 208, VW Polo) : 150 EUR
+- Berline (Audi A4, Tesla Model 3, BMW Serie 3) : 200 EUR
+- SUV (Peugeot 3008, VW Tiguan, Mercedes GLC) : 250 EUR
+- Sportive et Luxe (Porsche 911, BMW M3, Audi RS) : 400 EUR
+
+## Localisation
+
+83 rue de Roissy, 93290 Tremblay-en-France, France. Acces direct A1/A3, a proximite de l'aeroport Paris-CDG. Zone de service : Ile-de-France (rayon 50 km).
+
+## Processus
+
+1. Le client vient avec ou sans rendez-vous au centre
+2. Nos experts inspectent le vehicule (45 min - 1 heure)
+3. Le rapport complet est envoye par email avec photos, score et recommandations
+
+## Cible
+
+- Particuliers achetant un vehicule d'occasion (B2C)
+- Concessionnaires depot-vente, gestionnaires de flottes, plateformes de rendez-vous auto (B2B)
+
+## Contact
+
+- Site web : https://www.certicar.eu
+- Adresse : 83 rue de Roissy, 93290 Tremblay-en-France

@@ -42,12 +42,16 @@
   "@graph": [
     {
       "@type": "AutoRepair",
+      "@id": "https://www.certicar.eu/#organization",
       "name": "Certicar",
-      "description": "Centre d'inspection automobile avant achat. Inspection complète de véhicules d'occasion avec rapport détaillé, photos HD et score de fiabilité.",
+      "description": "Centre d'inspection automobile avant achat en Île-de-France. Inspection complète de véhicules d'occasion avec rapport détaillé, 400+ points de contrôle, 25+ photos HD et score de fiabilité A-E.",
       "url": "https://www.certicar.eu",
-      "logo": "https://www.certicar.eu/assets/images/certicar-logo.svg",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.certicar.eu/assets/images/certicar-logo.svg"
+      },
       "image": "https://www.certicar.eu/assets/images/og-image.png",
-      "telephone": "",
+      "telephone": "+33651575229",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "83 rue de Roissy",
@@ -58,15 +62,15 @@
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": 48.9566,
-        "longitude": 2.5664
+        "latitude": 48.95660,
+        "longitude": 2.56640
       },
       "areaServed": {
         "@type": "GeoCircle",
         "geoMidpoint": {
           "@type": "GeoCoordinates",
-          "latitude": 48.9566,
-          "longitude": 2.5664
+          "latitude": 48.95660,
+          "longitude": 2.56640
         },
         "geoRadius": "50000"
       },
@@ -110,6 +114,7 @@
     },
     {
       "@type": "WebSite",
+      "@id": "https://www.certicar.eu/#website",
       "name": "Certicar",
       "url": "https://www.certicar.eu"
     },
@@ -166,10 +171,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 <style>
-  @font-face { font-family: 'HafferSQ'; src: url('./assets/fonts/HafferSQ-Regular.otf') format('opentype'); font-weight: 400; }
-  @font-face { font-family: 'HafferSQ'; src: url('./assets/fonts/HafferSQ-Medium.otf') format('opentype'); font-weight: 500; }
-  @font-face { font-family: 'HafferSQ'; src: url('./assets/fonts/HafferSQ-SemiBold.otf') format('opentype'); font-weight: 600; }
-  @font-face { font-family: 'HafferSQ'; src: url('./assets/fonts/HafferSQ-Bold.otf') format('opentype'); font-weight: 700; }
+  @font-face { font-family: 'HafferSQ'; src: url('./assets/fonts/HafferSQ-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'HafferSQ'; src: url('./assets/fonts/HafferSQ-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
+  @font-face { font-family: 'HafferSQ'; src: url('./assets/fonts/HafferSQ-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
+  @font-face { font-family: 'HafferSQ'; src: url('./assets/fonts/HafferSQ-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -370,10 +375,11 @@
     position: absolute; inset: 0; overflow: hidden;
     opacity: 0.14; mix-blend-mode: multiply;
   }
-  .hero-video iframe {
+  .hero-video video {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     width: 100vw; height: 100vh;
+    object-fit: cover;
     min-width: 177.78vh; min-height: 56.25vw;
     pointer-events: none;
   }
@@ -2167,7 +2173,7 @@
 <div class="announce-bar">
   <span>
     <span class="announce-badge">Nouveau</span>
-    Ouverture en mars 2026
+    Ouverture en mai 2026
   </span>
 </div>
 
@@ -2194,7 +2200,9 @@
 <section class="hero" id="section-header">
   <div class="hero-container">
     <div class="hero-video">
-      <iframe src="https://www.youtube.com/embed/L7m5gIb023s?si=h41q_ii0P0Lk6qGD&autoplay=1&mute=1&loop=1&playlist=L7m5gIb023s&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1" title="bg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <video autoplay muted loop playsinline preload="auto" aria-hidden="true">
+        <source src="./assets/hero-bg.mp4" type="video/mp4" />
+      </video>
     </div>
     <div class="hero-noise"></div>
     <div class="hero-grid"></div>
@@ -2810,7 +2818,7 @@ C'est exactement ce qui manquait sur le marché de l'occasion."</p>
     <div class="footer-logo">Certicar</div>
     <div class="footer-links">
       <a href="#">Mentions legales</a>
-      <a href="#">Contact</a>
+      <a href="tel:+33651575229">06 51 57 52 29</a>
       <a href="#">Instagram</a>
     </div>
     <div class="footer-copy">&copy; 2026 Certicar. Tous droits reserves.</div>
@@ -2828,7 +2836,7 @@ C'est exactement ce qui manquait sur le marché de l'occasion."</p>
       <div class="cta-3d-icon"><div class="cta-3d-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div></div>
     </div>
   </a>
-  <a href="#" class="fb-whatsapp" data-coming-soon-trigger>
+  <a href="https://wa.me/33651575229?text=Bonjour%2C%20je%20souhaite%20prendre%20rendez-vous%20pour%20une%20inspection." class="fb-whatsapp" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     WhatsApp
   </a>
@@ -2852,7 +2860,7 @@ C'est exactement ce qui manquait sur le marché de l'occasion."</p>
         </div>
         <div style="font-size: 20px; font-weight: 700; color: var(--text); margin-top: 20px;">Le centre ouvre ses portes très bientôt</div>
         <div style="font-size: 14px; color: var(--text-50); margin-top: 10px; max-width: 320px; line-height: 1.6;">
-          Notre centre d'inspection ouvre en mars 2026. La prise de rendez-vous sera disponible dès l'ouverture.
+          Notre centre d'inspection ouvre en mai 2026. La prise de rendez-vous sera disponible dès l'ouverture.
         </div>
         <div style="margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 12px; background: rgba(89,85,239,0.08); color: var(--purple); font-size: 13px; font-weight: 600;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="width: 16px; height: 16px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
